@@ -44,3 +44,34 @@ My CircleCI deployment process will:
 * Build the Next.js app
 * Build a new Docker image containing the app
 * Run the Terraform deployment to upload the new container version and update ECS with the new container
+
+## Decisions Made
+
+### CSS-in-JS
+
+I prefer CSS-in-JS strategies because it means I only have to deal with JS, and it makes certain configurations simpler.
+
+Having said that, there are 12 million options for CSS-in-JS today. I used [this list](http://michelebertoli.github.io/css-in-js/) to determine what's out there, filtering for the following requirements:
+* Automatic Vendor Prefixing
+* Pseudo Classes
+* Media Queries
+
+The first requirement is to make things easier on me, the latter two are both to ensure that I have the full capabilities of CSS available.
+
+I then filtered out libraries that haven't been updated in the last 3 months, and libraries with too few GitHub stars, yielding the following list (sorted by GitHub stars):
+
+Package | GitHub Stars | Last Updated (as of 2019/03/01)
+--|--|--
+styled-components | 22394 | 2019/01/30
+emotion | 7144 | 2019/02/28
+radium | 6845 | 2018/12/16
+react-jss | 4621 | 2019/02/27
+aphrodite | 4567 | 2019/02/21
+styled-jsx | 4147 | 2019/02/12
+linaria | 3165 | 2019/03/01
+styletron-react | 2650 | 2019/02/27
+react-fela | 1549 | 2019/02/22
+
+I ended up opting with styled-components because it had the most elegant API and highest community support.
+
+The only drawback was that I now have to include Babel in the build pipeline. However, this was probably necessary because the custom Next.js babel loader includes a lot of other features necessary to make the SSR  work properly.
