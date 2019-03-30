@@ -1,5 +1,3 @@
-import React from 'react';
-
 export type DomKey = keyof JSX.IntrinsicElements;
 
 export const domElements: Array<DomKey> = [
