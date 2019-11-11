@@ -20,5 +20,5 @@ workflows:
     jobs:
       - deploy-docker
       - deploy-terraform:
-        requires:
-          - deploy-docker
+          requires:
+            - deploy-docker
