@@ -6,8 +6,8 @@ jobs:
     steps:
       - checkout
       - run: apt-get update
-      - run: apt-get install awscli
-      - run: apt-get install docker
+      - run: apt-get install awscli -y
+      - run: apt-get install docker -y
       - run: ./docker.sh
   deploy-terraform:
     docker:
@@ -16,7 +16,7 @@ jobs:
       - checkout
       - run: cd terraform
       - run: terraform plan
-      - run: terraform apply
+      - run: terraform apply -auto-approve
 workflows:
   version: 2
   deploy:
