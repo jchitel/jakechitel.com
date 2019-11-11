@@ -1,5 +1,15 @@
 version: 2.1
 jobs:
+  build:
+    docker:
+      - image: node:12
+    steps:
+      - checkout
+      - run:
+          name: Build app
+          command: |
+            yarn
+            yarn build
   deploy-docker:
     docker:
       - image: node:12
@@ -50,7 +60,18 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - deploy-docker
+      - build
+      - deploy-docker:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - build
       - deploy-terraform:
+          filters:
+            branches:
+              only:
+                - master
           requires:
             - deploy-docker
