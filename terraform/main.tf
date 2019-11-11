@@ -1,5 +1,6 @@
 terraform {
   backend "remote" {
+    hostname = "app.terraform.io"
     organization = "jake-chitel"
 
     workspaces {
@@ -9,6 +10,5 @@ terraform {
 }
 
 provider "aws" {
-  profile    = "default"
   region     = "us-east-1"
 }
