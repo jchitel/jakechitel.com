@@ -5,6 +5,8 @@ jobs:
       - image: node:12
     steps:
       - checkout
+      - run: apt-get install aws-cli
+      - run: apt-get install docker
       - run: ./docker.sh
   deploy-terraform:
     docker:
