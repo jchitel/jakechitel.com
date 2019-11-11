@@ -15,7 +15,9 @@ jobs:
             curl -O https://bootstrap.pypa.io/get-pip.py
             python3 get-pip.py --user
             pip install awscli --upgrade --user
-            find / -name aws
+            sudo find /root -name aws
+            sudo find /bin -name aws
+            sudo find /usr -name aws
       - run:
           name: Install Docker client
           command: |
