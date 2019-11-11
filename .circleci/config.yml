@@ -5,6 +5,7 @@ jobs:
       - image: node:12
     steps:
       - checkout
+      - run: apt-get update
       - run: apt-get install awscli
       - run: apt-get install docker
       - run: ./docker.sh
