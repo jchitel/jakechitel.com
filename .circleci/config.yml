@@ -9,7 +9,7 @@ jobs:
       - run:
           name: Install AWS CLI
           command: |
-            export PATH=$PATH:/root/.local/bin
+            export PATH=$PATH:/root/.local/bin:/root/bin
             apt-get -y -qq update
             apt-get -y -qq install python3
             curl -O https://bootstrap.pypa.io/get-pip.py
