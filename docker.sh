@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Log in to the ECR repository
+which aws
 $(aws ecr get-login --no-include-email --region us-east-1)
 
 # Build the image
