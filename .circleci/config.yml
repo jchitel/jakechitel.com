@@ -7,7 +7,7 @@ jobs:
       - checkout
       - run: apt-get update
       - run: apt-get install awscli -y
-      - run: apt-get install docker -y
+      - run: apt-get install docker-engine -y
       - run: ./docker.sh
   deploy-terraform:
     docker:
