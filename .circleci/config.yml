@@ -1,6 +1,4 @@
 version: 2.1
-orbs:
-  aws-cli: circleci/aws-cli@0.1.16
 jobs:
   deploy-docker:
     docker:
@@ -8,10 +6,14 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - aws-cli/install
       - run:
-          name: Expose aws command
-          command: export PATH=$PATH:~/.local/bin
+          name: Install AWS CLI
+          command: |
+            apt-get -y -qq update
+            apt-get -y -qq install python3.4-dev
+            curl -O https://bootstrap.pypa.io/get-pip.py
+            python3.4 get-pip.py --user
+            pip install awscli --upgrade --user
       - run:
           name: Install Docker client
           command: |
