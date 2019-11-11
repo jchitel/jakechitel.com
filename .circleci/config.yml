@@ -2,12 +2,11 @@ version: 2
 jobs:
   deploy-docker:
     docker:
-      - image: node:12
+      - image: docker
     steps:
       - checkout
       - run: apt-get update
       - run: apt-get install awscli -y
-      - run: apt-get install docker-engine -y
       - run: ./docker.sh
   deploy-terraform:
     docker:
