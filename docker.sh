@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Log in to the ECR repository
+pwd
 which aws
 $(aws ecr get-login --no-include-email --region us-east-1)
 
