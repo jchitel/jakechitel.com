@@ -34,9 +34,12 @@ jobs:
       - image: hashicorp/terraform:latest
     steps:
       - checkout
-      - run: cd terraform
-      - run: terraform plan
-      - run: terraform apply -auto-approve
+      - run: 
+          name: Run terraform
+          command: |
+            cd terraform
+            terraform plan
+            terraform apply -auto-approve
 workflows:
   version: 2
   deploy:
