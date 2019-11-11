@@ -10,6 +10,9 @@ jobs:
       - setup_remote_docker
       - aws-cli/install
       - run:
+          name: Expose aws command
+          run: export PATH=$PATH:/root/bin
+      - run:
           name: Install Docker client
           command: |
             set -x
