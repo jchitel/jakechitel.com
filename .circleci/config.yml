@@ -16,6 +16,8 @@ jobs:
             python3 get-pip.py --user
             pip install awscli --upgrade --user
             echo $PATH
+            which aws
+            /root/.local/bin/aws --version
       - run:
           name: Install Docker client
           command: |
