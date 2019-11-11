@@ -37,7 +37,13 @@ jobs:
       - run: 
           name: Run terraform
           command: |
+            # Configure terraform api access
+            touch ~/.terraformrc
+            echo "credentials \"app.terraform.io\" { token = \"$TERRAFORM_API_TOKEN\" }\" > ~/.terraformrc
+
+            # Run terraform
             cd terraform
+            terraform init
             terraform plan
             terraform apply -auto-approve
 workflows:
