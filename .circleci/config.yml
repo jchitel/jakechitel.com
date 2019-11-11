@@ -1,4 +1,6 @@
-version: 2
+version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@0.1.16
 jobs:
   deploy-docker:
     docker:
@@ -6,11 +8,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run:
-          name: Install AWS CLI
-          command: |
-            apt-get update
-            apt-get install awscli -y
+      - aws-cli/install
       - run:
           name: Install Docker client
           command: |
