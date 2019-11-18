@@ -9,7 +9,7 @@ jobs:
           name: Build app
           command: |
             yarn
-            yarn build
+            yarn prod-build
   deploy-docker:
     docker:
       - image: node:12
