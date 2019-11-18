@@ -3,6 +3,6 @@ FROM node:12
 WORKDIR /app
 COPY . ./
 RUN yarn
-RUN yarn build
+RUN yarn prod-build
 EXPOSE 80
-CMD ["node", "index.js"]
+CMD ["yarn", "prod-start"]

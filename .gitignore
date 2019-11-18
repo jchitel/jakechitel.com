@@ -60,5 +60,11 @@ typings/
 # next.js build output
 .next
 
+# Parcel cache
+.parcel-cache/
+
 # Terraform generated files
 .terraform/
+
+# Dist directory
+dist/
