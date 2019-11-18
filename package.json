@@ -1,24 +1,21 @@
 {
   "name": "jakechitel-com",
-  "version": "1.0.0",
+  "private": true,
   "description": "Jake Chitel's personal website",
-  "main": "index.js",
   "repository": "https://github.com/jchitel/jakechitel.com",
   "author": "Jake Chitel <jchitel@gmail.com>",
   "license": "MIT",
-  "private": true,
+  "workspaces": [
+    "src/client",
+    "src/server"
+  ],
   "scripts": {
-    "build": "tsc"
-  },
-  "dependencies": {
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
-    "tslib": "^1.10.0"
+    "dev": "ts-node scripts/dev.ts",
+    "prod-build": "ts-node scripts/prod-build.ts",
+    "prod-start": "ts-node scripts/prod-start.ts"
   },
   "devDependencies": {
-    "@types/node": "^12.11.7",
-    "@types/react": "^16.9.10",
-    "@types/react-dom": "^16.9.2",
-    "typescript": "^3.8.0-dev.20191024"
+    "lerna": "^3.18.4",
+    "ts-node": "^8.5.2"
   }
 }
