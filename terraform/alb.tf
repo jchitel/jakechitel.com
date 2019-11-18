@@ -1,13 +1,13 @@
 resource "aws_alb" "ecs-load-balancer" {
-    security_groups = ["${aws_security_group.alb.id}"]
+    security_groups = [aws_security_group.alb.id]
     subnets = [
-        "${aws_subnet.main_1a.id}",
-        "${aws_subnet.main_1b.id}"
+        aws_subnet.main_1a.id,
+        aws_subnet.main_1b.id
     ]
 }
 
 resource "aws_alb_listener" "port-80" {
-    load_balancer_arn = "${aws_alb.ecs-load-balancer.arn}"
+    load_balancer_arn = aws_alb.ecs-load-balancer.arn
     port = "80"
     protocol = "HTTP"
 
@@ -23,7 +23,7 @@ resource "aws_alb_listener" "port-80" {
 }
 
 resource "aws_alb_listener_rule" "http-root-to-www" {
-    listener_arn = "${aws_alb_listener.port-80.arn}"
+    listener_arn = aws_alb_listener.port-80.arn
     priority = 1
 
     condition {
@@ -44,20 +44,20 @@ resource "aws_alb_listener_rule" "http-root-to-www" {
 }
 
 resource "aws_alb_listener" "port-443" {
-    load_balancer_arn = "${aws_alb.ecs-load-balancer.arn}"
+    load_balancer_arn = aws_alb.ecs-load-balancer.arn
     port              = "443"
     protocol          = "HTTPS"
 
-    certificate_arn = "${aws_acm_certificate.jakechitel_com.arn}"
+    certificate_arn = aws_acm_certificate.jakechitel_com.arn
 
     default_action {
-        target_group_arn = "${aws_alb_target_group.ecs-target-group.arn}"
+        target_group_arn = aws_alb_target_group.ecs-target-group.arn
         type             = "forward"
     }
 }
 
 resource "aws_alb_listener_rule" "https-root-to-www" {
-    listener_arn = "${aws_alb_listener.port-443.arn}"
+    listener_arn = aws_alb_listener.port-443.arn
     priority = 1
 
     condition {
@@ -78,7 +78,7 @@ resource "aws_alb_listener_rule" "https-root-to-www" {
 resource "aws_alb_target_group" "ecs-target-group" {
     port = 80
     protocol = "HTTP"
-    vpc_id = "${aws_vpc.main.id}"
+    vpc_id = aws_vpc.main.id
     target_type = "ip"
 
     health_check {
