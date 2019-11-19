@@ -11,10 +11,6 @@ resource "aws_ecs_cluster" "main-cluster" {
     name = "personal-site-cluster"
 }
 
-data "aws_ecs_task_definition" "taskdef" {
-    task_definition = aws_ecs_task_definition.taskdef.family
-}
-
 resource "aws_ecs_task_definition" "taskdef" {
     family                = "personal-site-task"
     network_mode          = "awsvpc"
@@ -32,7 +28,7 @@ resource "aws_ecs_task_definition" "taskdef" {
         "hostPort": 80,
         "protocol": "tcp"
     }],
-    "memoryReservation": 512,
+    "memoryReservation": 200,
     "essential": true,
     "logConfiguration": {
         "logDriver": "awslogs",
@@ -49,9 +45,16 @@ DEFINITION
 resource "aws_ecs_service" "service" {
     name            = "personal-site-service"
   	cluster         = aws_ecs_cluster.main-cluster.id
-  	task_definition = "${aws_ecs_task_definition.taskdef.family}:${max(aws_ecs_task_definition.taskdef.revision, data.aws_ecs_task_definition.taskdef.revision)}"
+  	task_definition = "${aws_ecs_task_definition.taskdef.family}:${aws_ecs_task_definition.taskdef.revision}"
   	desired_count   = 1
     health_check_grace_period_seconds = 0
+    // For now, we'll need to do this to ensure that we can deploy, as currently our port configuration
+    // limits us to 1 task per instance, and we're only running one instance.
+    // In the long term, we should rework everything to use a "dynamic port mapping" so that
+    // we can start a new task on the same instance as the old one.
+    // What is the impact of this? We will have a tiny amount of downtime during deployment.
+    deployment_minimum_healthy_percent = 0
+    deployment_maximum_percent = 100
 
     deployment_controller {
         type = "ECS"
