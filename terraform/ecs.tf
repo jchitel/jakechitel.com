@@ -32,6 +32,7 @@ resource "aws_ecs_task_definition" "taskdef" {
         "hostPort": 80,
         "protocol": "tcp"
     }],
+    "memoryReservation": 512
     "essential": true,
     "logConfiguration": {
         "logDriver": "awslogs",
