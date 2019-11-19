@@ -18,8 +18,6 @@ data "aws_ecs_task_definition" "taskdef" {
 resource "aws_ecs_task_definition" "taskdef" {
     family                = "personal-site-task"
     network_mode          = "awsvpc"
-    cpu                   = 512
-    memory                = 512
 
     requires_compatibilities = ["EC2"]
 
@@ -29,8 +27,6 @@ resource "aws_ecs_task_definition" "taskdef" {
 [{
     "name": "node-service",
     "image": "${data.aws_ecr_repository.repo.repository_url}@${data.aws_ecr_image.personal-site.image_digest}",
-    "cpu": 512,
-    "memoryReservation": 512,
     "portMappings": [{
         "containerPort": 80,
         "hostPort": 80,
