@@ -3,7 +3,7 @@ data "aws_ecr_repository" "repo" {
 }
 
 data "aws_ecr_image" "personal-site" {
-    repository_name = "${data.aws_ecr_repository.repo.name}"
+    repository_name = data.aws_ecr_repository.repo.name
     image_tag = "latest"
 }
 
@@ -12,7 +12,7 @@ resource "aws_ecs_cluster" "main-cluster" {
 }
 
 data "aws_ecs_task_definition" "taskdef" {
-    task_definition = "${aws_ecs_task_definition.taskdef.family}"
+    task_definition = aws_ecs_task_definition.taskdef.family
 }
 
 resource "aws_ecs_task_definition" "taskdef" {
@@ -51,8 +51,8 @@ DEFINITION
 
 resource "aws_ecs_service" "service" {
     name            = "personal-site-service"
-  	cluster         = "${aws_ecs_cluster.main-cluster.id}"
-  	task_definition = "${aws_ecs_task_definition.taskdef.family}:${max("${aws_ecs_task_definition.taskdef.revision}", "${data.aws_ecs_task_definition.taskdef.revision}")}"
+  	cluster         = aws_ecs_cluster.main-cluster.id
+  	task_definition = "${aws_ecs_task_definition.taskdef.family}:${max(aws_ecs_task_definition.taskdef.revision, data.aws_ecs_task_definition.taskdef.revision)}"
   	desired_count   = 1
     health_check_grace_period_seconds = 0
 
@@ -61,7 +61,7 @@ resource "aws_ecs_service" "service" {
     }
 
   	load_balancer {
-        target_group_arn  = "${aws_alb_target_group.ecs-target-group.arn}"
+        target_group_arn  = aws_alb_target_group.ecs-target-group.arn
         container_port    = 80
         container_name    = "node-service"
 	}

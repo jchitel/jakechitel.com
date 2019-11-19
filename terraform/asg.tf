@@ -21,12 +21,12 @@ data "aws_ami" "ecs-optimized" {
 
 // This is the configuration that the autoscaling group will use to launch instances
 resource "aws_launch_configuration" "ecs-launch-configuration" {
-    image_id                    = "${data.aws_ami.ecs-optimized.id}"
+    image_id                    = data.aws_ami.ecs-optimized.id
     // t3.micro seems to be a good cheap starting size.
     // If it isn't enough, we can bump up the min/max size of the autoscaling group 
     // and reserve another instance until the current reservation is up, then use a bigger instance type.
     instance_type               = "t3.micro"
-    iam_instance_profile        = "${aws_iam_instance_profile.ecs-instance-profile.arn}"
+    iam_instance_profile        = aws_iam_instance_profile.ecs-instance-profile.arn
 
     ebs_block_device {
         device_name = "/dev/xvdcz"
@@ -39,7 +39,7 @@ resource "aws_launch_configuration" "ecs-launch-configuration" {
         create_before_destroy = true
     }
 
-    security_groups             = ["${aws_security_group.main.id}"]
+    security_groups             = [aws_security_group.main.id]
     associate_public_ip_address = "true"
     // The name of the key pair that I created for this service
     key_name                    = "personal-site"
@@ -62,10 +62,14 @@ resource "aws_autoscaling_group" "ecs-autoscaling-group" {
     // I don't quite see the difference between this and `min_size` so I just keep them equal.
     desired_capacity            = 1
     // Ensure that we launch instances in both availability zones
-    vpc_zone_identifier         = ["${aws_subnet.main_1a.id}", "${aws_subnet.main_1b.id}"]
-    launch_configuration        = "${aws_launch_configuration.ecs-launch-configuration.name}"
+    vpc_zone_identifier         = [aws_subnet.main_1a.id, aws_subnet.main_1b.id]
+    launch_configuration        = aws_launch_configuration.ecs-launch-configuration.name
     // I'm not entirely sure what this does, it may just defer to the load balancer for health checking.
     // I don't know how the ASG knows which ELB to talk to though.
     health_check_type           = "EC2"
     health_check_grace_period = 0
+
+    lifecycle {
+        create_before_destroy = true
+    }
 }
