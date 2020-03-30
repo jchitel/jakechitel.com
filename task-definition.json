@@ -1,0 +1,32 @@
+{
+    "family": "personal-site",
+    "requiresCompatibilities": ["FARGATE"],
+    "executionRoleArn": "arn:aws:iam::289214495984:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "cpu": "256",
+    "memory": "512",
+    "containerDefinitions": [{
+        "name": "node-service",
+        "essential": true,
+        "memoryReservation": 300,
+        "portMappings": [{
+            "hostPort": 80,
+            "protocol": "tcp",
+            "containerPort": 80
+        }],
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-group": "/ecs/personal-site",
+                "awslogs-region": "us-east-1",
+                "awslogs-stream-prefix": "ecs"
+            }
+        },
+        "healthCheck": {
+            "retries": 3,
+            "command": ["curl -f http://localhost/health-check || exit 1"],
+            "timeout": 5,
+            "interval": 30
+        }
+    }]
+}
