@@ -1,6 +1,7 @@
 on:
-  release:
-    types: [created]
+  push:
+    branches: 
+    - master
 
 name: Deploy to Amazon ECS
 
@@ -12,6 +13,16 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+      
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+      
+    - name: Build container payload
+      run: |
+        yarn
+        yarn prod-build
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
