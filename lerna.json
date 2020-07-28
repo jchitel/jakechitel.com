@@ -1,7 +1,0 @@
-{
-  "packages": [
-    "src/client",
-    "src/server"
-  ],
-  "version": "independent"
-}

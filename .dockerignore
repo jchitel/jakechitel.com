@@ -1,7 +1,4 @@
 .git
 node_modules
-terraform
 .vscode
-.circleci
-.parcel-cache
 dist
