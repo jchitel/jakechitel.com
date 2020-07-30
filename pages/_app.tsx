@@ -1,23 +1,16 @@
+import 'normalize.css/normalize.css';
+
 import React from 'react';
-import '../styles/globals.css';
 import { ThemeProvider } from 'styled-components';
 import { AppProps } from 'next/app';
+import theme from '../styles/theme';
+import GlobalStyle from '../styles/GlobalStyle';
 
-const theme = {
-    colors: {
-        background: '',
-        primary: '#0070f3',
-        secondary: '',
-        tertiary: ''
-    },
-};
-
-function MyApp({ Component, pageProps }: AppProps) {
-    return (
-        <ThemeProvider theme={theme}>
-            <Component {...pageProps} />
-        </ThemeProvider>
-    );
-}
+const MyApp = ({ Component, pageProps }: AppProps) => (
+    <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Component {...pageProps} />
+    </ThemeProvider>
+);
 
 export default MyApp;
