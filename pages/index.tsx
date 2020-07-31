@@ -1,18 +1,14 @@
 import React from 'react';
-import Head from 'next/head';
 import styled from 'styled-components';
+import Layout from '../components/Layout';
+import InlineLink from '../styles/InlineLink';
 
 export default function Home() {
     return (
-        <Container>
-            <Head>
-                <title>Create Next App</title>
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-
+        <Layout>
             <Main>
                 <Title>
-                    Welcome to <a href="https://nextjs.org">Next.js!</a>
+                    Welcome to <InlineLink href="https://nextjs.org">Next.js!</InlineLink>
                 </Title>
 
                 <Description>
@@ -46,30 +42,9 @@ export default function Home() {
                     </Card>
                 </Grid>
             </Main>
-
-            <Footer>
-                <a
-                    href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Powered by{' '}
-                    <Logo src="/vercel.svg" alt="Vercel Logo" />
-                </a>
-            </Footer>
-        </Container>
+        </Layout>
     );
 }
-
-const Container = styled.div`
-    background-color: ${_ => _.theme.background.normal};
-    min-height: 100vh;
-    padding: 0 0.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-`;
 
 const Main = styled.main`
     padding: 5rem 0;
@@ -85,15 +60,6 @@ const Title = styled.h1`
     line-height: 1.15;
     font-size: 4rem;
     text-align: center;
-
-    & a {
-        color: ${_ => _.theme.accent.normal};
-        text-decoration: none;
-
-        &:hover, &:focus, &:active {
-            text-decoration: underline;
-        }
-    }
 `;
 
 const Description = styled.p`
@@ -120,10 +86,8 @@ const Grid = styled.div`
     margin-top: 3rem;
 
     @media (max-width: 600px) {
-        & {
-            width: 100%;
-            flex-direction: column;
-        }
+        width: 100%;
+        flex-direction: column;
     }
 `;
 
@@ -143,37 +107,14 @@ const Card = styled.a`
         border-color: ${_ => _.theme.accent.normal};
     }
 
-    & h3 {
+    h3 {
         margin: 0 0 1rem 0;
         font-size: 1.5rem;
     }
 
-    & p {
+    p {
         margin: 0;
         font-size: 1.25rem;
         line-height: 1.5;
     }
-`;
-
-const Footer = styled.footer`
-    width: 100%;
-    height: 100px;
-    border-top: 1px solid ${_ => _.theme.gray.light};
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    img {
-        margin-left: 0.5rem;
-    }
-
-    a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-`;
-
-const Logo = styled.img`
-    height: 1em;
 `;
