@@ -1,27 +1,13 @@
 import { AppProps } from 'next/app';
-import { createGlobalStyle } from 'styled-components';
-
-const GlobalStyle = createGlobalStyle`
-    html,
-    body {
-        padding: 0;
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-            Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    }
-
-    a {
-        color: inherit;
-        text-decoration: none;
-    }
-
-    * {
-        box-sizing: border-box;
-    }
-`;
+import Head from 'next/head';
+import { GlobalStyle } from '../styles/global';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
     return <>
+        <Head>
+            <title>Jake Chitel</title>
+            <link rel="icon" href="/favicon.ico" />
+        </Head>
         <GlobalStyle />
         <Component {...pageProps} />
     </>
