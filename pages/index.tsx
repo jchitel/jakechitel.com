@@ -1,46 +1,140 @@
 import styled from 'styled-components';
+import { size, fontSize, color } from '../styles/common';
 
 export default function Home() {
     return (
-        <HomeContainer>
+        <div>
             <Header />
-            <Summary />
-            <Contact />
-            <Education />
-            <Experience />
-            <Skills />
-        </HomeContainer>
+            <StyledMain>
+                <Hero />
+                <About />
+                <Education />
+                <Experience />
+                <Skills />
+            </StyledMain>
+        </div>
     )
 }
 
-const HomeContainer = styled.div`
-    padding: 0 20px;
-    max-width: 600px;
+const Header = () => (
+    <StyledHeader>
+        <Nav />
+        <ContactLinks />
+    </StyledHeader>
+);
+
+const StyledHeader = styled.header`
+    height: ${size.lg_64};
+    width: 100%;
+    padding: 0 ${size.lg_32};
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: ${color.background};
+    font-weight: bold;
+    letter-spacing: 2px;
 `;
 
-const Header = () => (
-    <>
-        <h1>Jake Chitel</h1>
-        <h2>Software Engineer</h2>
-    </>
-)
+const Nav = () => (
+    <StyledNav>
+        <NavLink href="#about">ABOUT</NavLink>
+        <NavLink href="#experience">EXPERIENCE</NavLink>
+        <NavLink href="#skills">SKILLS</NavLink>
+    </StyledNav>
+);
 
-const Title = styled.h1`
+const StyledNav = styled.nav`
+    display: flex;
+`;
 
+const NavLink = styled.a`
+    :not(:last-child) {
+        padding-right: ${size.md_24};
+    }
+`;
+
+const ContactLinks = () => (
+    <StyledContactLinks>
+        <StyledContactLink href="mailto:jchitel@gmail.com" target="_blank">EMAIL</StyledContactLink>
+        <StyledContactLink href="https://www.linkedin.com/in/jacob-chitel-4a395858/" target="_blank">LINKEDIN</StyledContactLink>
+        <StyledContactLink href="https://github.com/jchitel" target="_blank">GITHUB</StyledContactLink>
+        <StyledContactLink href="javascript:alert('Resume not yet available. Check back soon!');">RESUME</StyledContactLink>
+    </StyledContactLinks>
+);
+
+const StyledContactLinks = styled.div`
+    display: flex;
+`;
+
+const StyledContactLink = styled.a`
+    :not(:first-child) {
+        padding-left: ${size.md_24};
+    }
+`;
+
+const StyledMain = styled.main`
+    margin: 0 auto;
+    padding: 0 ${size.xl_128};
+    max-width: ${size.xxxxl_1600};
+    font-size: ${fontSize.md_14};
+
+    @media (max-width: ${size.xxxxl_1152}) {
+        padding: 0 ${size.lg_64};
+    }
+
+    @media (max-width: ${size.xxxl_768}) {
+        padding: 0 ${size.lg_32};
+    }
+
+    @media (max-width: ${size.xxl_512}) {
+        padding: 0 ${size.md_24};
+    }
+`;
+
+const Hero = () => (
+    <StyledHero>
+        <Name>Jake Chitel</Name>
+        <PositionName>Software Engineer</PositionName>
+        <Summary />
+    </StyledHero>
+);
+
+const StyledHero = styled.div`
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`;
+
+const Name = styled.div`
+    font-size: clamp(${fontSize.xl_36}, 8vw, ${fontSize.xxl_72});
+    font-weight: bold;
+`;
+
+const PositionName = styled.div`
+    /* 5.33vw is relative to 8vw above so that Name and PositionName begin to scale at the same time. */
+    font-size: clamp(${fontSize.lg_24}, 5.33vw, ${fontSize.xl_48});
+    font-weight: bold;
+    padding-bottom: ${size.lg_32};
 `;
 
 const Summary = () => (
-    <p>
-        I am a software engineer based in Milwaukee, Wisconsin.
-        My expertise is in full-stack web development, where I am proficient in .NET and NodeJS stacks.
-        I also have growing experience in iOS and Android.
-        I am driven by a thirst for crafting truly awesome user experiences.
-    </p>
-)
-
-const Contact = () => (
     <>
-        <h3>Contact</h3>
+        <SummaryPoint>I am a software engineer based in Milwaukee, Wisconsin.</SummaryPoint>
+        <SummaryPoint>My expertise is in full-stack web development, where I am proficient in .NET and NodeJS stacks.</SummaryPoint>
+        <SummaryPoint>I also have growing experience in native mobile development.</SummaryPoint>
+        <SummaryPoint>I am driven by a thirst for crafting truly awesome user experiences.</SummaryPoint>
+    </>
+);
+
+const SummaryPoint = styled.p`
+    margin-top: 0;
+`;
+
+const About = () => (
+    <>
+        <h3 id="about">About</h3>
         <ul>
             <li>Email: jchitel@gmail.com</li>
             <li>LinkedIn: https://www.linkedin.com/in/jacob-chitel-4a395858/</li>
@@ -61,7 +155,7 @@ const Education = () => (
 
 const Experience = () => (
     <>
-        <h3>Experience</h3>
+        <h3 id="experience">Experience</h3>
 
         <Company location="Direct Supply, Milwaukee, Wisconsin">
             <Position
@@ -161,7 +255,7 @@ const Position = ({ title, description }: IPositionProps) => (
 
 const Skills = () => (
     <>
-        <h3>Skills</h3>
+        <h3 id="skills">Skills</h3>
         <ul>
             <li>Frontend</li>
             <ul>
