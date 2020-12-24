@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { color } from './common';
+import { color, size } from './common';
 
 export const GlobalStyle = createGlobalStyle`
     html,
@@ -7,8 +7,7 @@ export const GlobalStyle = createGlobalStyle`
         width: 100%;
         padding: 0;
         margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-            Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+        font-family: Jost, sans-serif;
         background-color: ${color.background};
         color: ${color.foreground};
     }
@@ -20,5 +19,14 @@ export const GlobalStyle = createGlobalStyle`
 
     * {
         box-sizing: border-box;
+    }
+
+    // Causes anchor links to navigate so that the target appears below the nav bar instead of underneath it.
+    // https://stackoverflow.com/a/28824157
+    :target::before {
+        content: "";
+        display: block;
+        height: ${size.lg_64};
+        margin: -${size.lg_64} 0 0;
     }
 `;
