@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { FaRegEnvelope, FaLinkedinIn, FaGithub, FaRegFilePdf } from 'react-icons/fa';
 import { size, fontSize, color } from '../styles/common';
 
 export default function Home() {
@@ -50,16 +51,24 @@ const StyledNav = styled.nav`
 
 const NavLink = styled.a`
     :not(:last-child) {
-        padding-right: ${size.md_24};
+        margin-right: ${size.md_24};
     }
 `;
 
 const ContactLinks = () => (
     <StyledContactLinks>
-        <StyledContactLink href="mailto:jchitel@gmail.com" target="_blank">EMAIL</StyledContactLink>
-        <StyledContactLink href="https://www.linkedin.com/in/jacob-chitel-4a395858/" target="_blank">LINKEDIN</StyledContactLink>
-        <StyledContactLink href="https://github.com/jchitel" target="_blank">GITHUB</StyledContactLink>
-        <StyledContactLink href="javascript:alert('Resume not yet available. Check back soon!');">RESUME</StyledContactLink>
+        <StyledContactLink href="mailto:jchitel@gmail.com" target="_blank">
+            <FaRegEnvelope />
+        </StyledContactLink>
+        <StyledContactLink href="https://www.linkedin.com/in/jacob-chitel-4a395858/" target="_blank">
+            <FaLinkedinIn />
+        </StyledContactLink>
+        <StyledContactLink href="https://github.com/jchitel" target="_blank">
+            <FaGithub />
+        </StyledContactLink>
+        <StyledContactLink href="javascript:alert('Resume not yet available. Check back soon!');">
+            <FaRegFilePdf />
+        </StyledContactLink>
     </StyledContactLinks>
 );
 
@@ -69,7 +78,7 @@ const StyledContactLinks = styled.div`
 
 const StyledContactLink = styled.a`
     :not(:first-child) {
-        padding-left: ${size.md_24};
+        margin-left: ${size.md_24};
     }
 `;
 
