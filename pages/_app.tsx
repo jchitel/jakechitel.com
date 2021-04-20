@@ -1,6 +1,6 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import { GlobalStyle } from '../styles/global';
+import 'tailwindcss/tailwind.css'
 
 // https://developers.google.com/fonts/docs/css2
 // This is requesting weights 200-900 for both non-italic and italic.
