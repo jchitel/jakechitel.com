@@ -1,6 +1,6 @@
-import styled from 'styled-components';
 import { FaRegEnvelope, FaLinkedinIn, FaGithub, FaRegFilePdf } from 'react-icons/fa';
 import { size, fontSize, color } from '../styles/common';
+import cx from 'classnames';
 
 export default function Home() {
     return (
@@ -18,10 +18,12 @@ export default function Home() {
 }
 
 const Header = () => (
-    <StyledHeader>
+    <header
+        className={cx("")}
+    >
         <Nav />
         <ContactLinks />
-    </StyledHeader>
+    </header>
 );
 
 const StyledHeader = styled.header`
