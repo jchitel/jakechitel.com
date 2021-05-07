@@ -18,25 +18,19 @@ export default function Home() {
 }
 
 const Header = () => (
-    <header
-        className={cx("")}
-    >
+    <header className={cx(
+        "h-16 w-full px-8",
+        "fixed flex justify-between items-center",
+        "bg-gray-900",
+        "font-bold tracking-widest"
+    )} >
         <Nav />
         <ContactLinks />
     </header>
 );
 
 const StyledHeader = styled.header`
-    height: ${size.lg_64};
-    width: 100%;
-    padding: 0 ${size.lg_32};
-    position: fixed;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     background-color: ${color.background};
-    font-weight: bold;
-    letter-spacing: 2px;
 `;
 
 const Nav = () => (
