@@ -1,6 +1,6 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import 'tailwindcss/tailwind.css'
+import '../styles/global.css';
 
 // https://developers.google.com/fonts/docs/css2
 // This is requesting weights 200-900 for both non-italic and italic.
@@ -15,7 +15,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             <link rel="icon" href="/favicon.ico" />
             <link rel="stylesheet" href={`https://fonts.googleapis.com/css2?${sansSerif}&${serif}&${monospace}`} />
         </Head>
-        <GlobalStyle />
         <Component {...pageProps} />
     </>
 }

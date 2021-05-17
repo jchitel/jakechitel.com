@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    /* Causes anchor links to navigate so that the target appears below the nav bar instead of underneath it. */
+    /* https://stackoverflow.com/a/28824157 */
+    :target::before {
+        content: "";
+        display: block;
+        @apply h-16;
+        @apply -mt-16;
+    }
+}

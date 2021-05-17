@@ -1,18 +1,21 @@
 import { FaRegEnvelope, FaLinkedinIn, FaGithub, FaRegFilePdf } from 'react-icons/fa';
-import { size, fontSize, color } from '../styles/common';
 import cx from 'classnames';
 
 export default function Home() {
     return (
         <div>
             <Header />
-            <StyledMain>
+            <main className={cx(
+                "my-0 mx-auto max-w-screen-2xl",
+                "py-0 px-6 sm:px-8 md:px-16 xl:px-32",
+                "text-sm"
+            )}>
                 <Hero />
                 <About />
                 <Education />
                 <Experience />
                 <Skills />
-            </StyledMain>
+            </main>
         </div>
     )
 }
@@ -29,113 +32,47 @@ const Header = () => (
     </header>
 );
 
-const StyledHeader = styled.header`
-    background-color: ${color.background};
-`;
-
 const Nav = () => (
-    <StyledNav>
-        <NavLink href="#about">ABOUT</NavLink>
-        <NavLink href="#experience">EXPERIENCE</NavLink>
-        <NavLink href="#skills">SKILLS</NavLink>
-    </StyledNav>
+    <nav className="flex space-x-6">
+        <a href="#about">ABOUT</a>
+        <a href="#experience">EXPERIENCE</a>
+        <a href="#skills">SKILLS</a>
+    </nav>
 );
-
-const StyledNav = styled.nav`
-    display: flex;
-`;
-
-const NavLink = styled.a`
-    :not(:last-child) {
-        margin-right: ${size.md_24};
-    }
-`;
 
 const ContactLinks = () => (
-    <StyledContactLinks>
-        <StyledContactLink href="mailto:jchitel@gmail.com" target="_blank">
+    <div className="flex space-x-6">
+        <a href="mailto:jchitel@gmail.com" target="_blank">
             <FaRegEnvelope />
-        </StyledContactLink>
-        <StyledContactLink href="https://www.linkedin.com/in/jacob-chitel-4a395858/" target="_blank">
+        </a>
+        <a href="https://www.linkedin.com/in/jacob-chitel-4a395858/" target="_blank">
             <FaLinkedinIn />
-        </StyledContactLink>
-        <StyledContactLink href="https://github.com/jchitel" target="_blank">
+        </a>
+        <a href="https://github.com/jchitel" target="_blank">
             <FaGithub />
-        </StyledContactLink>
-        <StyledContactLink href="javascript:alert('Resume not yet available. Check back soon!');">
+        </a>
+        <a href="javascript:alert('Resume not yet available. Check back soon!');">
             <FaRegFilePdf />
-        </StyledContactLink>
-    </StyledContactLinks>
+        </a>
+    </div>
 );
-
-const StyledContactLinks = styled.div`
-    display: flex;
-`;
-
-const StyledContactLink = styled.a`
-    :not(:first-child) {
-        margin-left: ${size.md_24};
-    }
-`;
-
-const StyledMain = styled.main`
-    margin: 0 auto;
-    padding: 0 ${size.xl_128};
-    max-width: ${size.xxxxl_1600};
-    font-size: ${fontSize.md_14};
-
-    @media (max-width: ${size.xxxxl_1152}) {
-        padding: 0 ${size.lg_64};
-    }
-
-    @media (max-width: ${size.xxxl_768}) {
-        padding: 0 ${size.lg_32};
-    }
-
-    @media (max-width: ${size.xxl_512}) {
-        padding: 0 ${size.md_24};
-    }
-`;
 
 const Hero = () => (
-    <StyledHero>
-        <Name>Jake Chitel</Name>
-        <PositionName>Software Engineer</PositionName>
+    <div className="h-screen flex flex-col justify-center">
+        <div className={cx("text-4xl md:text-5xl lg:text-6xl xl:text-7xl", "font-bold")}>Jake Chitel</div>
+        <div className={cx("text-2xl md:text-3xl lg:text-4xl xl:text-5xl", "font-bold", "pb-8")}>Software Engineer</div>
         <Summary />
-    </StyledHero>
+    </div>
 );
-
-const StyledHero = styled.div`
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-`;
-
-const Name = styled.div`
-    font-size: clamp(${fontSize.xl_36}, 8vw, ${fontSize.xxl_72});
-    font-weight: bold;
-`;
-
-const PositionName = styled.div`
-    /* 5.33vw is relative to 8vw above so that Name and PositionName begin to scale at the same time. */
-    font-size: clamp(${fontSize.lg_24}, 5.33vw, ${fontSize.xl_48});
-    font-weight: bold;
-    padding-bottom: ${size.lg_32};
-`;
 
 const Summary = () => (
     <>
-        <SummaryPoint>I am a software engineer based in Milwaukee, Wisconsin.</SummaryPoint>
-        <SummaryPoint>My expertise is in full-stack web development, where I am proficient in .NET and NodeJS stacks.</SummaryPoint>
-        <SummaryPoint>I also have growing experience in native mobile development.</SummaryPoint>
-        <SummaryPoint>I am driven by a thirst for crafting truly awesome user experiences.</SummaryPoint>
+        <p>I am a software engineer based in Milwaukee, Wisconsin.</p>
+        <p>My expertise is in full-stack web development, where I am proficient in .NET and NodeJS stacks.</p>
+        <p>I also have growing experience in native mobile development.</p>
+        <p>I am driven by a thirst for crafting truly awesome user experiences.</p>
     </>
 );
-
-const SummaryPoint = styled.p`
-    margin-top: 0;
-`;
 
 const About = () => (
     <>
