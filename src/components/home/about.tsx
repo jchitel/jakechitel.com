@@ -5,14 +5,14 @@ export const About = () => (
         <Box className="space-y-4">
             <Paragraph>
                 I have had a passion for computers for as long as I can remember.
-                So, naturally, I wanted to be a brain surgeon and set my sights on med school.
-                Fortunately, I had the opportunity to take a course on digital electronics in high school,
+                So naturally, I decided to be a brain surgeon and set my sights on med school.
+                Fortunately in high school, I had the opportunity to take a course on digital electronics,
                 which got me back on the right track.
                 From there, it was a short skip, step, and a hop to learn Java,
                 and the wonderful world of software was open to me.
             </Paragraph>
             <Paragraph>
-                After high school I enrolled in a Computer Engineering program at Marquette University.
+                After high school I enrolled in the Computer Engineering program at Marquette University.
                 I had been gravitating toward software, but I wanted to be well-rounded, so I got a nice
                 balance of hardware, too. My favorite courses were Operating Systems, Computer Architecture,
                 Networks, and most of all, Compilers. It's a long term goal of mine to build a compiler
@@ -33,7 +33,7 @@ export const About = () => (
                 to rebuild a native mobile app from the ground up.
             </Paragraph>
             <Paragraph>
-                Today, I'm working remote full-time at Arch Insurance, where I'm hoping to get some valuable experience
+                Today, I'm working remote full-time at Ventus Risk, where I'm hoping to get some valuable experience
                 with Python and continue advancing my React skills. Stay tuned for more developments here!
             </Paragraph>
         </Box>

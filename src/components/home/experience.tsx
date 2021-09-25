@@ -2,10 +2,10 @@ import { Section, Box, Paragraph } from './common';
 
 export const Experience = () => (
     <Section anchor="experience" header="Experience">
-        <Company location="Arch Insurance, Remote">
+        <Company location="Ventus Risk (Subsidiary of Arch Insurance), Remote">
             <Position
                 title="Software Engineer IV, June 2021 - Present"
-                description={'I just recently started here at Arch, so I don\'t have much yet to report. '
+                description={'I just recently started here at Ventus, so I don\'t have much yet to report. '
                     + 'But I\'m hoping to get some valuable experience here with React and Python.'}
             />
         </Company>
