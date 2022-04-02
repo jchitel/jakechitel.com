@@ -1,136 +1,8 @@
-interface SvgCoreAttributes {
-    id?: string;
-    tabIndex?: number;
-}
+import React from 'react';
+import { flattenFragments, isElementOfType } from '../../utils/react';
+import { SvgConditionalProcessingAttributes, SvgCoreAttributes, SvgGlobalEventAttributes, SvgGraphicalEventAttributes, SvgPresentationAttributes, SvgStylingAttributes } from './attrs';
 
-interface SvgStylingAttributes {
-    className?: string;
-    style?: React.CSSProperties;
-}
-
-interface SvgConditionalProcessingAttributes {
-    requiredExtensions?: string;
-    systemLanguage?: string;
-}
-
-interface SvgPresentationAttributes {
-    alignmentBaseline?: 'auto' | 'baseline' | 'before-edge' | 'text-before-edge' | 'middle' | 'central' | 'after-edge' | 'text-after-edge' | 'ideographic' | 'alphabetic' | 'hanging' | 'mathematical' | 'inherit';
-    baselineShift?: number | 'sub' | 'super';
-    clipPath?: string;
-    clipRule?: 'nonzero' | 'evenodd' | 'inherit';
-    color?: string;
-    colorInterpolation?: 'auto' | 'sRGB' | 'linearRGB';
-    colorInterpolationFilters?: 'auto' | 'sRGB' | 'linearRGB';
-    cursor?: string;
-    direction?: 'ltr' | 'rtl';
-    display?: string;
-    dominantBaseline?: 'auto' | 'text-bottom' | 'alphabetic' | 'ideographic' | 'middle' | 'central' | 'mathematical' | 'hanging' | 'text-top';
-    fill?: string;
-    fillOpacity?: number | string;
-    fillRule?: 'nonzero' | 'evenodd' | 'inherit';
-    filter?: string;
-    floodColor?: string;
-    floodOpacity?: number;
-    fontFamily?: string;
-    fontSize?: number | string;
-    fontSizeAdjust?: number | string;
-    fontStretch?: string;
-    fontStyle?: 'normal' | 'italic' | 'oblique';
-    fontVariant?: string;
-    fontWeight?: number | 'normal' | 'bold' | 'bolder' | 'lighter';
-    imageRendering?: 'auto' | 'optimizeSpeed' | 'optimizeQuality';
-    letterSpacing?: number | string;
-    lightingColor?: string;
-    markerEnd?: string;
-    markerMid?: string;
-    markerStart?: string;
-    mask?: string;
-    opacity?: number;
-    overflow?: 'auto' | 'visible' | 'hidden' | 'scroll';
-    pointerEvents?: 'bounding-box' | 'visiblePainted' | 'visibleFill' | 'visibleStroke' | 'visible' | 'painted' | 'fill' | 'stroke' | 'all' | 'none';
-    shapeRendering?: 'auto' | 'optimizeSpeed' | 'crispEdges' | 'geometricPrecision';
-    stopColor?: string;
-    stopOpacity?: number;
-    stroke?: string;
-    strokeDasharray?: string;
-    strokeDashoffset?: number | string;
-    strokeLinecap?: 'butt' | 'round' | 'square';
-    strokeLinejoin?: 'arcs' | 'bevel' | 'miter' | 'miter-clip' | 'round';
-    strokeMiterlimit?: number;
-    strokeOpacity?: number | string;
-    strokeWidth?: number | string;
-    textAnchor?: 'start' | 'middle' | 'end';
-    textDecoration?: string;
-    textRendering?: 'auto' | 'optimizeSpeed' | 'optimizeLegibility' | 'geometricPrecision';
-    transform?: string;
-    transformOrigin?: string;
-    unicodeBidi?: 'normal' | 'embed' | 'isolate' | 'bidi-override' | 'isolate-override' | 'plaintext';
-    vectorEffect?: 'none' | 'non-scaling-stroke' | 'non-scaling-size' | 'non-rotation' | 'fixed-position';
-    visibility?: 'visible' | 'hidden' | 'collapse';
-    wordSpacing?: number | string;
-    writingMode?: 'horizontal-tb' | 'vertical-rl' | 'vertical-lr';
-}
-
-interface SvgFilterPrimitiveAttributes {
-    height?: number | string;
-    result?: string;
-    width?: number | string;
-    x?: number | string;
-    y?: number | string;
-}
-
-interface SvgTransferFunctionAttributes {
-    type?: string;
-    tableValues?: string;
-    intercept?: number;
-    amplitude?: number;
-    exponent?: number;
-    offset?: number;
-}
-
-interface SvgAnimationTargetElementAttributes {
-    href?: string;
-}
-
-interface SvgAnimationAttributeTargetAttributes {
-    attributeName?: string;
-}
-
-interface SvgAnimationTimingAttributes {
-    begin?: string;
-    dur?: string;
-    end?: string;
-    min?: string;
-    max?: string;
-    restart?: 'always' | 'whenNotActive' | 'never';
-    repeatCount?: number | 'indefinite';
-    repeatDur?: string;
-    fill?: 'freeze' | 'remove';
-}
-
-interface SvgAnimationValueAttributes {
-    calcMode?: 'discrete' | 'linear' | 'paced' | 'spline';
-    values?: string;
-    keyTimes?: string;
-    keySplines?: string;
-    from?: number | string;
-    to?: number | string;
-    by?: number | string;
-    autoReverse?: boolean | 'true' | 'false';
-    accelerate?: string;
-    decelerate?: string;
-}
-
-interface SvgAnimationAdditionAttributes {
-    additive?: 'replace' | 'sum';
-    accumulate?: 'none' | 'sum';
-}
-
-interface SvgGlobalEventAttributes {
-    oncancel
-}
-
-interface PathProps extends SvgCoreAttributes, SvgStylingAttributes, SvgConditionalProcessingAttributes, SvgGlobalEventAttributes {
+interface PathProps extends SvgCoreAttributes, SvgStylingAttributes, SvgConditionalProcessingAttributes, SvgGlobalEventAttributes, SvgGraphicalEventAttributes, SvgPresentationAttributes {
     /** The shape of the path (This has precedence over `children`) */
     d?: string;
     /**
@@ -150,44 +22,31 @@ interface PathProps extends SvgCoreAttributes, SvgStylingAttributes, SvgConditio
     children?: React.ReactNode;
 }
 
-export default function Path(props: PathProps) {
+export default function Path({ d, children, ...props }: PathProps) {
+    const finalD = d ?? convertPathChildrenToD(children);
     return (
         <path
-            onCanPlay
-            onCanPlayCapture
-            onCanPlayThrough
-            onCanPlayThroughCapture
-            onChange
-            onChangeCapture
-            onClick
-            onClickCapture
-            onDoubleClick
-            onDoubleClickCapture
-            onDrag
-            onDragCapture
-            onDragEnd
-            onDragEndCapture
-            onDragEnter
-            onDragEnterCapture
-            onDragLeave
-            onDragLeaveCapture
-            onDragOver
-            onDragOverCapture
-            onDragStart
-            onDragStartCapture
-            onDrop
-            onDropCapture
-            onDurationChange
-            onDurationChangeCapture
-            onEmptied
-            onEmptiedCapture
-            onEnd
+            {...(props as any)} // TODO: svg attributes in react types are wrong
         />
     );
 }
 
+type MoveToProps = AbsoluteMoveToProps | RelativeMoveToProps;
+
+interface AbsoluteMoveToProps {
+    absolute?: true;
+    x: number;
+    y: number;
+}
+
+interface RelativeMoveToProps {
+    relative: true;
+    dx: number;
+    dy: number;
+}
+
 export function MoveTo(props: MoveToProps) {
-    //
+    return null;
 }
 
 export function LineTo(props: LineToProps) {
@@ -209,3 +68,15 @@ export function Arc(props: ArcProps) {
 export function Close(props: CloseProps) {
     //
 }
+
+const convertPathChildrenToD = (children: React.ReactNode): string => {
+    const elements = flattenFragments(children);
+    let d = '';
+    for (const element of elements) {
+        if (isElementOfType(element, MoveTo)) {
+
+        }
+    }
+}
+
+
