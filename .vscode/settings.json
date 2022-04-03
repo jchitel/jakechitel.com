@@ -3,16 +3,9 @@
     "editor.quickSuggestions": {
         "strings": true
     },
-    "prettier.enable": false,
     "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true,
-    },
-    "eslint.format.enable": true,
-    "[json]": {
-        "editor.formatOnSave": false,
-        "editor.codeActionsOnSave": {
-            "source.fixAll.eslint": false,
-        },
+        "source.fixAll.eslint": true
     }
 }

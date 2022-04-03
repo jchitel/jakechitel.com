@@ -1,13 +1,26 @@
 import React from "react";
-import { flattenFragments, isElementOfType } from '../../utils/react';
-import { SvgConditionalProcessingAttributes, SvgCoreAttributes, SvgGlobalEventAttributes, SvgGraphicalEventAttributes, SvgPresentationAttributes, SvgStylingAttributes } from './attrs';
+import { flattenFragments, isElementOfType } from "../../utils/react";
+import {
+    SvgConditionalProcessingAttributes,
+    SvgCoreAttributes,
+    SvgGlobalEventAttributes,
+    SvgGraphicalEventAttributes,
+    SvgPresentationAttributes,
+    SvgStylingAttributes,
+} from "./attrs";
 
-interface PathProps extends SvgCoreAttributes, SvgStylingAttributes, SvgConditionalProcessingAttributes, SvgGlobalEventAttributes, SvgGraphicalEventAttributes, SvgPresentationAttributes {
+interface PathProps
+    extends SvgCoreAttributes,
+        SvgStylingAttributes,
+        SvgConditionalProcessingAttributes,
+        SvgGlobalEventAttributes,
+        SvgGraphicalEventAttributes,
+        SvgPresentationAttributes {
     /** The shape of the path (This has precedence over `children`) */
     d?: string;
     /**
      * Override the length that will be used for this path in computations that use it.
-     * 
+     *
      * This does not change the appearance of the path, it only affects what calculations
      * *observe* the length to be.
      */
@@ -16,13 +29,14 @@ interface PathProps extends SvgCoreAttributes, SvgStylingAttributes, SvgConditio
      * Allows a component-based mechanism for defining a path.
      * Specify the sequence of path commands as a list of React elements,
      * which will then be translated to an actual path string.
-     * 
+     *
      * If `d` is specified, it will override this prop.
      */
     children?: React.ReactNode;
 }
 
 export default function Path({ d, children, ...props }: PathProps) {
+    const a = / {2}/;
     const finalD = d ?? convertPathChildrenToD(children);
     return (
         <path
@@ -71,12 +85,9 @@ export function Close(props: CloseProps) {
 
 const convertPathChildrenToD = (children: React.ReactNode): string => {
     const elements = flattenFragments(children);
-    const d = '';
+    const d = "";
     for (const element of elements) {
         if (isElementOfType(element, MoveTo)) {
-
         }
     }
-}
-
-
+};
