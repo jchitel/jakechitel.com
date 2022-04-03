@@ -14,20 +14,42 @@ export interface SvgConditionalProcessingAttributes {
 }
 
 export interface SvgPresentationAttributes {
-    alignmentBaseline?: 'auto' | 'baseline' | 'before-edge' | 'text-before-edge' | 'middle' | 'central' | 'after-edge' | 'text-after-edge' | 'ideographic' | 'alphabetic' | 'hanging' | 'mathematical' | 'inherit';
-    baselineShift?: number | 'sub' | 'super';
+    alignmentBaseline?:
+        | "auto"
+        | "baseline"
+        | "before-edge"
+        | "text-before-edge"
+        | "middle"
+        | "central"
+        | "after-edge"
+        | "text-after-edge"
+        | "ideographic"
+        | "alphabetic"
+        | "hanging"
+        | "mathematical"
+        | "inherit";
+    baselineShift?: number | "sub" | "super";
     clipPath?: string;
-    clipRule?: 'nonzero' | 'evenodd' | 'inherit';
+    clipRule?: "nonzero" | "evenodd" | "inherit";
     color?: string;
-    colorInterpolation?: 'auto' | 'sRGB' | 'linearRGB';
-    colorInterpolationFilters?: 'auto' | 'sRGB' | 'linearRGB';
+    colorInterpolation?: "auto" | "sRGB" | "linearRGB";
+    colorInterpolationFilters?: "auto" | "sRGB" | "linearRGB";
     cursor?: string;
-    direction?: 'ltr' | 'rtl';
+    direction?: "ltr" | "rtl";
     display?: string;
-    dominantBaseline?: 'auto' | 'text-bottom' | 'alphabetic' | 'ideographic' | 'middle' | 'central' | 'mathematical' | 'hanging' | 'text-top';
+    dominantBaseline?:
+        | "auto"
+        | "text-bottom"
+        | "alphabetic"
+        | "ideographic"
+        | "middle"
+        | "central"
+        | "mathematical"
+        | "hanging"
+        | "text-top";
     fill?: string;
     fillOpacity?: number | string;
-    fillRule?: 'nonzero' | 'evenodd' | 'inherit';
+    fillRule?: "nonzero" | "evenodd" | "inherit";
     filter?: string;
     floodColor?: string;
     floodOpacity?: number;
@@ -35,10 +57,10 @@ export interface SvgPresentationAttributes {
     fontSize?: number | string;
     fontSizeAdjust?: number | string;
     fontStretch?: string;
-    fontStyle?: 'normal' | 'italic' | 'oblique';
+    fontStyle?: "normal" | "italic" | "oblique";
     fontVariant?: string;
-    fontWeight?: number | 'normal' | 'bold' | 'bolder' | 'lighter';
-    imageRendering?: 'auto' | 'optimizeSpeed' | 'optimizeQuality';
+    fontWeight?: number | "normal" | "bold" | "bolder" | "lighter";
+    imageRendering?: "auto" | "optimizeSpeed" | "optimizeQuality";
     letterSpacing?: number | string;
     lightingColor?: string;
     markerEnd?: string;
@@ -46,29 +68,58 @@ export interface SvgPresentationAttributes {
     markerStart?: string;
     mask?: string;
     opacity?: number;
-    overflow?: 'auto' | 'visible' | 'hidden' | 'scroll';
-    pointerEvents?: 'bounding-box' | 'visiblePainted' | 'visibleFill' | 'visibleStroke' | 'visible' | 'painted' | 'fill' | 'stroke' | 'all' | 'none';
-    shapeRendering?: 'auto' | 'optimizeSpeed' | 'crispEdges' | 'geometricPrecision';
+    overflow?: "auto" | "visible" | "hidden" | "scroll";
+    pointerEvents?:
+        | "bounding-box"
+        | "visiblePainted"
+        | "visibleFill"
+        | "visibleStroke"
+        | "visible"
+        | "painted"
+        | "fill"
+        | "stroke"
+        | "all"
+        | "none";
+    shapeRendering?:
+        | "auto"
+        | "optimizeSpeed"
+        | "crispEdges"
+        | "geometricPrecision";
     stopColor?: string;
     stopOpacity?: number;
     stroke?: string;
     strokeDasharray?: string;
     strokeDashoffset?: number | string;
-    strokeLinecap?: 'butt' | 'round' | 'square';
-    strokeLinejoin?: 'arcs' | 'bevel' | 'miter' | 'miter-clip' | 'round';
+    strokeLinecap?: "butt" | "round" | "square";
+    strokeLinejoin?: "arcs" | "bevel" | "miter" | "miter-clip" | "round";
     strokeMiterlimit?: number;
     strokeOpacity?: number | string;
     strokeWidth?: number | string;
-    textAnchor?: 'start' | 'middle' | 'end';
+    textAnchor?: "start" | "middle" | "end";
     textDecoration?: string;
-    textRendering?: 'auto' | 'optimizeSpeed' | 'optimizeLegibility' | 'geometricPrecision';
+    textRendering?:
+        | "auto"
+        | "optimizeSpeed"
+        | "optimizeLegibility"
+        | "geometricPrecision";
     transform?: string;
     transformOrigin?: string;
-    unicodeBidi?: 'normal' | 'embed' | 'isolate' | 'bidi-override' | 'isolate-override' | 'plaintext';
-    vectorEffect?: 'none' | 'non-scaling-stroke' | 'non-scaling-size' | 'non-rotation' | 'fixed-position';
-    visibility?: 'visible' | 'hidden' | 'collapse';
+    unicodeBidi?:
+        | "normal"
+        | "embed"
+        | "isolate"
+        | "bidi-override"
+        | "isolate-override"
+        | "plaintext";
+    vectorEffect?:
+        | "none"
+        | "non-scaling-stroke"
+        | "non-scaling-size"
+        | "non-rotation"
+        | "fixed-position";
+    visibility?: "visible" | "hidden" | "collapse";
     wordSpacing?: number | string;
-    writingMode?: 'horizontal-tb' | 'vertical-rl' | 'vertical-lr';
+    writingMode?: "horizontal-tb" | "vertical-rl" | "vertical-lr";
 }
 
 export interface SvgFilterPrimitiveAttributes {
@@ -102,28 +153,28 @@ export interface SvgAnimationTimingAttributes {
     end?: string;
     min?: string;
     max?: string;
-    restart?: 'always' | 'whenNotActive' | 'never';
-    repeatCount?: number | 'indefinite';
+    restart?: "always" | "whenNotActive" | "never";
+    repeatCount?: number | "indefinite";
     repeatDur?: string;
-    fill?: 'freeze' | 'remove';
+    fill?: "freeze" | "remove";
 }
 
 export interface SvgAnimationValueAttributes {
-    calcMode?: 'discrete' | 'linear' | 'paced' | 'spline';
+    calcMode?: "discrete" | "linear" | "paced" | "spline";
     values?: string;
     keyTimes?: string;
     keySplines?: string;
     from?: number | string;
     to?: number | string;
     by?: number | string;
-    autoReverse?: boolean | 'true' | 'false';
+    autoReverse?: boolean | "true" | "false";
     accelerate?: string;
     decelerate?: string;
 }
 
 export interface SvgAnimationAdditionAttributes {
-    additive?: 'replace' | 'sum';
-    accumulate?: 'none' | 'sum';
+    additive?: "replace" | "sum";
+    accumulate?: "none" | "sum";
 }
 
 export interface SvgAnimationEventAttributes {

@@ -1,20 +1,22 @@
-import { About, Education } from './about';
-import { Experience } from './experience';
-import { Skills } from './skills';
-import cx from 'classnames';
-import { Popover, Transition } from '@headlessui/react';
-import { HiMenu, HiX } from 'react-icons/hi';
-import { Fragment } from 'react';
+import { About, Education } from "./about";
+import { Experience } from "./experience";
+import { Skills } from "./skills";
+import cx from "classnames";
+import { Popover, Transition } from "@headlessui/react";
+import { HiMenu, HiX } from "react-icons/hi";
+import { Fragment } from "react";
 
 const OldHome = () => (
     <div>
         <Header />
-        <main className={cx(
-            "my-0 mx-auto max-w-screen-2xl",
-            "pt-0 pb-8 px-6 sm:px-8 md:px-16 xl:px-32",
-            "space-y-8",
-            "text-sm"
-        )}>
+        <main
+            className={cx(
+                "my-0 mx-auto max-w-screen-2xl",
+                "pt-0 pb-8 px-6 sm:px-8 md:px-16 xl:px-32",
+                "space-y-8",
+                "text-sm"
+            )}
+        >
             <Hero />
             <About />
             <Education />
@@ -33,12 +35,15 @@ export const Home = () => {
                 <Hero />
             </div>
         </div>
-    )
-}
+    );
+};
 
 const Background = () => {
     return (
-        <div className="hidden sm:block sm:absolute sm:inset-y-0 sm:h-full sm:w-full" aria-hidden="true">
+        <div
+            className="hidden sm:block sm:absolute sm:inset-y-0 sm:h-full sm:w-full"
+            aria-hidden="true"
+        >
             <div className="relative h-full max-w-7xl mx-auto">
                 <svg
                     className="absolute right-full transform translate-y-1/4 translate-x-1/4 lg:translate-x-1/2"
@@ -56,7 +61,14 @@ const Background = () => {
                             height={20}
                             patternUnits="userSpaceOnUse"
                         >
-                            <rect x={0} y={0} width={4} height={4} className="text-gray-200" fill="currentColor" />
+                            <rect
+                                x={0}
+                                y={0}
+                                width={4}
+                                height={4}
+                                className="text-gray-200"
+                                fill="currentColor"
+                            />
                         </pattern>
                     </defs>
                     <rect width={404} height={784} fill="url(#pattern1)" />
@@ -77,44 +89,67 @@ const Background = () => {
                             height={20}
                             patternUnits="userSpaceOnUse"
                         >
-                            <rect x={0} y={0} width={4} height={4} className="text-gray-200" fill="currentColor" />
+                            <rect
+                                x={0}
+                                y={0}
+                                width={4}
+                                height={4}
+                                className="text-gray-200"
+                                fill="currentColor"
+                            />
                         </pattern>
                     </defs>
                     <rect width={404} height={784} fill="url(#pattern2)" />
                 </svg>
             </div>
         </div>
-    )
-}
+    );
+};
 
 const navigation = [
-    { name: 'About', href: '#about' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Skills', href: '#skills' },
+    { name: "About", href: "#about" },
+    { name: "Experience", href: "#experience" },
+    { name: "Skills", href: "#skills" },
 ];
 
 const Header = () => {
     return (
         <Popover>
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
-                <nav className="relative flex items-center justify-between sm:h-10 md:justify-center" aria-label="Global">
+                <nav
+                    className="relative flex items-center justify-between sm:h-10 md:justify-center"
+                    aria-label="Global"
+                >
                     <div className="flex items-center flex-1 md:absolute md:inset-y-0 md:left-0">
                         <div className="flex items-center justify-between w-full md:w-auto">
                             <a href="#top">
                                 <span className="sr-only">Workflow</span>
-                                <img className="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="" />
+                                <img
+                                    className="h-8 w-auto sm:h-10"
+                                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                                    alt=""
+                                />
                             </a>
                             <div className="-mr-2 flex items-center md:hidden">
                                 <Popover.Button className="bg-gray-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                                    <span className="sr-only">Open main menu</span>
-                                    <HiMenu className="h-6 w-6" aria-hidden="true" />
+                                    <span className="sr-only">
+                                        Open main menu
+                                    </span>
+                                    <HiMenu
+                                        className="h-6 w-6"
+                                        aria-hidden="true"
+                                    />
                                 </Popover.Button>
                             </div>
                         </div>
                     </div>
                     <div className="hidden md:flex md:space-x-10">
-                        {navigation.map(item => (
-                            <a key={item.name} href={item.href} className="font-medium text-gray-500 hover:text-gray-900">
+                        {navigation.map((item) => (
+                            <a
+                                key={item.name}
+                                href={item.href}
+                                className="font-medium text-gray-500 hover:text-gray-900"
+                            >
                                 {item.name}
                             </a>
                         ))}
@@ -157,7 +192,10 @@ const Header = () => {
                             <div className="-mr-2">
                                 <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                                     <span className="sr-only">Close menu</span>
-                                    <HiX className="h-6 w-6" aria-hidden="true" />
+                                    <HiX
+                                        className="h-6 w-6"
+                                        aria-hidden="true"
+                                    />
                                 </Popover.Button>
                             </div>
                         </div>
@@ -182,23 +220,26 @@ const Header = () => {
                 </Popover.Panel>
             </Transition>
         </Popover>
-    )
-}
+    );
+};
 
 const Hero = () => {
     return (
         <main className="mt-16 mx-auto max-w-7xl px-4 sm:mt-24">
             <div className="text-center">
                 <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                    <span className="block xl:inline">Jake Chitel</span>{' '}
-                    <span className="block text-indigo-600 xl:inline">Software Engineer</span>
+                    <span className="block xl:inline">Jake Chitel</span>{" "}
+                    <span className="block text-indigo-600 xl:inline">
+                        Software Engineer
+                    </span>
                 </h1>
                 <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 mg:text-xl md:max-w-3xl">
                     I am a software engineer based in Milwaukee, Wisconsin.
                     <br />
-                    My expertise is in full-stack web development, where I am proficient in .NET and NodeJS stacks.
-                    <br />
-                    I am driven by a thirst for crafting truly awesome user experiences.
+                    My expertise is in full-stack web development, where I am
+                    proficient in .NET and NodeJS stacks.
+                    <br />I am driven by a thirst for crafting truly awesome
+                    user experiences.
                 </p>
                 <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
                     <div className="rounded-md shadow">
@@ -220,5 +261,5 @@ const Hero = () => {
                 </div>
             </div>
         </main>
-    )
-}
+    );
+};
