@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { flattenFragments, isElementOfType } from '../../utils/react';
 import { SvgConditionalProcessingAttributes, SvgCoreAttributes, SvgGlobalEventAttributes, SvgGraphicalEventAttributes, SvgPresentationAttributes, SvgStylingAttributes } from './attrs';
 
@@ -71,7 +71,7 @@ export function Close(props: CloseProps) {
 
 const convertPathChildrenToD = (children: React.ReactNode): string => {
     const elements = flattenFragments(children);
-    let d = '';
+    const d = '';
     for (const element of elements) {
         if (isElementOfType(element, MoveTo)) {
 

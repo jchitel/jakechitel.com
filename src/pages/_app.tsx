@@ -4,9 +4,9 @@ import '../styles/global.css';
 
 // https://developers.google.com/fonts/docs/css2
 // This is requesting weights 200-900 for both non-italic and italic.
-let sansSerif = 'family=Jost:ital,wght@0,200..900;1,200..900';
-let serif = 'family=Bitter';
-let monospace = 'family=Source+Code+Pro'
+const sansSerif = 'family=Jost:ital,wght@0,200..900;1,200..900';
+const serif = 'family=Bitter';
+const monospace = 'family=Source+Code+Pro'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
     return <>
