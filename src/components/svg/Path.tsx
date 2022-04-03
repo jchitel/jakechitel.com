@@ -36,7 +36,6 @@ interface PathProps
 }
 
 export default function Path({ d, children, ...props }: PathProps) {
-    const a = / {2}/;
     const finalD = d ?? convertPathChildrenToD(children);
     return (
         <path
