@@ -1,7 +1,7 @@
 import React, { createContext } from "react";
 import {
     ContextConsumer,
-    //     ContextProvider,
+    ContextProvider,
     //     Element,
     //     ForwardRef,
     //     Fragment,
@@ -11,8 +11,8 @@ import {
     //     Profiler,
     //     StrictMode,
     //     Suspense,
-    //     isContextConsumer,
-    //     isContextProvider,
+    isContextConsumer,
+    isContextProvider,
     //     isElement,
     //     isForwardRef,
     //     isFragment,
@@ -22,8 +22,8 @@ import {
     //     isProfiler,
     //     isStrictMode,
     //     isSuspense,
-    //     isValidElementType,
-    //     typeOf,
+    isValidElementType,
+    typeOf,
 } from "react-is";
 
 /**
@@ -32,50 +32,31 @@ import {
  */
 describe("React Internals", () => {
     test("Context", () => {
-        const context = createContext(-1);
-        context.displayName = "TestContext";
+        const context = createContext(-1) as React.Context<number> & {
+            $$typeof: symbol;
+        };
 
-        const keys = Object.keys(context);
-        const propertyNames = Object.getOwnPropertyNames(context);
-        const propertySymbols = Object.getOwnPropertySymbols(context);
-        expect(keys).toEqual([
-            "$$typeof",
-            "_currentValue",
-            "_currentValue2",
-            "_threadCount",
-            "Provider",
-            "Consumer",
-            "_defaultValue",
-            "_globalName",
-            "_currentRenderer",
-            "_currentRenderer2",
-            "displayName",
-        ]);
-        expect(propertyNames).toEqual(keys);
-        expect(propertySymbols).toEqual([]);
+        expect(context.$$typeof).toEqual(ContextConsumer);
+        expect(typeOf(context)).toBeUndefined();
+        expect(isContextConsumer(context)).toEqual(false);
+        expect(isContextProvider(context)).toEqual(false);
+        // wtf - should be false because you can't render it
+        expect(isValidElementType(context)).toEqual(true);
 
-        const transparentContext = context as TransparentContext<number>;
+        expect(context.Provider.$$typeof).toEqual(ContextProvider);
+        // wtf - should be `ContextProvider`
+        expect(typeOf(context.Provider)).toBeUndefined();
+        expect(isContextConsumer(context.Provider)).toEqual(false);
+        // wtf - should be true
+        expect(isContextProvider(context.Provider)).toEqual(false);
+        expect(isValidElementType(context.Provider)).toEqual(true);
 
-        expect(transparentContext.$$typeof).toEqual(ContextConsumer);
-        expect(transparentContext._currentValue).toEqual(-1);
-        expect(transparentContext._currentValue2).toEqual(-1);
-        expect(transparentContext._threadCount).toEqual(0);
-        //expect(transparentContext.Provider).toEqual({});
-        //expect(transparentContext.Consumer).toEqual({});
-        expect(transparentContext._defaultValue).toBeNull();
-        expect(transparentContext._globalName).toBeNull();
-        expect(transparentContext._currentRenderer).toBeNull();
-        expect(transparentContext._currentRenderer2).toBeNull();
+        expect(context.Consumer.$$typeof).toEqual(ContextConsumer);
+        // wtf - should be `ContextConsumer`
+        expect(typeOf(context.Consumer)).toBeUndefined();
+        // wtf - should be true
+        expect(isContextConsumer(context.Consumer)).toEqual(false);
+        expect(isContextProvider(context.Consumer)).toEqual(false);
+        expect(isValidElementType(context.Consumer)).toEqual(true);
     });
 });
-
-interface TransparentContext<T> extends React.Context<T> {
-    $$typeof: typeof ContextConsumer;
-    _currentValue: T;
-    _currentValue2: T;
-    _threadCount: number;
-    _defaultValue: T;
-    _globalName: string;
-    _currentRenderer: unknown;
-    _currentRenderer2: unknown;
-}
