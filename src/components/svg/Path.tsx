@@ -1,168 +1,101 @@
-import React, {
-    createContext,
-    useCallback,
-    useMemo,
-    useLayoutEffect,
-    useRef,
-    useContext,
-} from "react";
-import { panic } from "../../utils";
+import React, { useCallback, useMemo, useLayoutEffect, useRef } from "react";
+import { isElementOfType, normalizeChildren } from "../../utils/react";
 
 type PathProps = React.SVGProps<SVGPathElement>;
 
-const pathContext = createContext<PathContext | null>(null);
-const PathContextProvider = pathContext.Provider;
-
-const usePathContext = (component: string) => {
-    return (
-        useContext(pathContext) ??
-        panic(`<${component} /> can't be used outside of <Path />`)
-    );
-};
-
-interface PathContext {
-    addPathCommand: (command: string) => void;
-}
-
 export default function Path({ d, children, ...props }: PathProps) {
-    const pathDef = useRef(d ? [d] : []);
-
-    useLayoutEffect(() => {
-        if (!d) {
-            pathDef.current = [];
-        }
-    });
-
-    const addPathCommand = useCallback(
-        (command: string) => {
-            if (!d) {
-                pathDef.current = [...pathDef.current, command];
-            }
-        },
-        [d]
-    );
-
-    const pathContext: PathContext = useMemo(
-        () => ({ addPathCommand }),
-        [addPathCommand]
-    );
+    const def = d ?? extractPathDefFromJsx(children);
 
     return (
-        <PathContextProvider value={pathContext}>
-            <path d={d ?? pathDef.current.join(" ")} {...props}>
-                {children}
-            </path>
-        </PathContextProvider>
+        <path d={def} {...props}>
+            {children}
+        </path>
     );
 }
 
-interface MoveProps {
-    to: [x: number, y: number];
+function extractPathDefFromJsx(children: React.ReactNode): string | undefined {
+    const nodes = normalizeChildren(children);
+    if (!nodes.length) return undefined;
+
+    return nodes
+        .map((node) => {
+            if (isMove(node)) {
+                if (node.props.absolute) {
+                    return `M ${node.props.to.join(',')}`;
+                } else {
+                    return `m ${node.props.to.join(',')}`;
+                }
+            } else if (isLine(node)) {
+                if (node.props.absolute) {
+                    return `L ${node.props.end.join(',')}`;
+                } else {
+                    return `l ${node.props.},${node.props.dy}`;
+                }
+            } else if (isHorizontal(node)) {
+                if (node.props.absolute) {
+                    return `H ${node.props.x}`;
+                } else {
+                    return `h ${node.props.dx}`;
+                }
+            } else if (isVertical(node)) {
+                if (node.props.absolute) {
+                    return `V ${node.props.y}`;
+                } else {
+                    return `v ${node.props.dy}`;
+                }
+            } else if (isCubicBezier(node)) {
+                if (node.props.absolute) {
+                    if (node.props.controlStart) {
+                        return `C ${node.props.controlStart.join(',')} ${node.props.controlEnd.join(',')} ${node.props.end.join(',')}`;
+                    } else {
+                        return `S ${node.props.controlEnd.join(',')} ${node.props.end.join(',')}`;
+                    }
+                } else {
+                    if (node.props.controlStart) {
+                        return `c ${node.props.controlStart.join(',')} ${node.props.controlEnd.join(',')} ${node.props.end.join(',')}`;
+                    } else {
+                        return `s ${node.props.controlEnd.join(',')} ${node.props.end.join(',')}`;
+                    }
+                }
+            }
+        })
+        .join(" ");
 }
 
-export const Move = ({ to: [x, y] }: MoveProps) => {
-    const { addPathCommand } = usePathContext("Move");
+type MoveProps =
+    | { absolute: true; relative?: false; to: [x: number, y: number] }
+    | { relative: true; absolute?: false; to: [dx: number, dy: number] };
 
-    useLayoutEffect(() => {
-        addPathCommand(`M ${x},${y}`);
-    });
+export const Move = (_: MoveProps) => null;
+const isMove = isElementOfType(Move);
 
-    return null;
-};
+type LineProps =
+    | { absolute: true; relative?: false; end: [x: number, y: number] }
+    | { relative: true; absolute?: false; end: [dx: number, dy: number] };
 
-interface MoveRelativeProps {
-    delta: [dx: number, dy: number];
-}
+export const Line = (_: LineProps) => null;
+const isLine = isElementOfType(Line);
 
-export function MoveRelative({ delta: [dx, dy] }: MoveRelativeProps) {
-    const { addPathCommand } = usePathContext("MoveRelative");
+type HorizontalProps =
+    | { absolute: true; relative?: false; x: number }
+    | { relative: true; absolute?: false; dx: number };
 
-    useLayoutEffect(() => {
-        addPathCommand(`m ${dx},${dy}`);
-    });
+export const Horizontal = (_: HorizontalProps) => null;
+const isHorizontal = isElementOfType(Horizontal);
 
-    return null;
-}
+type VerticalProps =
+    | { absolute: true; relative?: false; y: number }
+    | { relative: true; absolute?: false; dy: number };
 
-interface LineProps {
-    x?: number;
-    y?: number;
-}
+export const Vertical = (_: VerticalProps) => null;
+const isVertical = isElementOfType(Vertical);
 
-export function Line({ x, y }: LineToProps) {
-    const { addPathCommand } = usePathContext("LineTo");
+type CubicBezierProps =
+    | { absolute: true; relative?: false; end: [x: number, y: number]; controlStart?: [x: number, y: number]; controlEnd: [x: number, y: number] }
+    | { relative: true; absolute?: false; end: [dx: number, dy: number]; controlStart?: [dx: number, dy: number]; controlEnd: [dx: number, dy: number] };
 
-    useLayoutEffect(() => {
-        if (x && y) {
-            addPathCommand(`L ${x},${y}`);
-        } else if (x) {
-            addPathCommand(`H ${x}`);
-        } else if (y) {
-            addPathCommand(`V ${y}`);
-        } else {
-            // if neither x nor y was specified then just issue a noop move
-            addPathCommand("m 0,0");
-        }
-    });
-
-    return null;
-}
-
-interface LineToRelativeProps {
-    dx?: number;
-    dy?: number;
-}
-
-export function LineToRelative({ dx, dy }: LineToRelativeProps) {
-    const { addPathCommand } = usePathContext("LineToRelative");
-
-    useLayoutEffect(() => {
-        if (dx && dy) {
-            addPathCommand(`l ${dx},${dy}`);
-        } else if (dx) {
-            addPathCommand(`h ${dx}`);
-        } else if (dy) {
-            addPathCommand(`v ${dy}`);
-        } else {
-            // if neither dx nor dy was specified then just issue a noop move
-            addPathCommand("m 0,0");
-        }
-    });
-
-    return null;
-}
-
-interface CBezierProps {
-    //
-}
-
-export function CBezier(props: CBezierProps) {
-    return null;
-}
-
-interface CBezierRelativeProps {
-    //
-}
-
-export function CBezierRelative(props: CBezierRelativeProps) {
-    return null;
-}
-
-interface QBezierProps {
-    //
-}
-
-export function QBezier(props: QBezierProps) {
-    return null;
-}
-
-interface QBezierRelativeProps {
-    //
-}
-
-export function QBezierRelative(props: QBezierRelativeProps) {
-    return null;
-}
+export const CubicBezier = (_: CubicBezierProps) => null;
+const isCubicBezier = isElementOfType(CubicBezier);
 
 export function Arc(props: ArcProps) {
     return null;
