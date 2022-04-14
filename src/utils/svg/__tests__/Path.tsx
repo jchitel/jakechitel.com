@@ -6,11 +6,9 @@ import Path, {
     Close,
     Cubic,
     extractPathDefFromJsx,
-    Horizontal,
     Line,
     Move,
     Quad,
-    Vertical,
 } from "../Path";
 
 describe("SVG Path Component", () => {
@@ -18,11 +16,11 @@ describe("SVG Path Component", () => {
         const { container } = render(
             <svg viewBox="0 0 100 100">
                 <Path>
-                    <Move to={[10, 30]} />
-                    <Arc radii={[20, 20]} counterClockwise end={[50, 30]} />
-                    <Arc radii={[20, 20]} counterClockwise end={[90, 30]} />
-                    <Quad control={[90, 60]} end={[50, 90]} />
-                    <Quad control={[10, 60]} end={[10, 30]} />
+                    <Move x={10} y={30} />
+                    <Arc rx={20} ry={20} ccw x={50} y={30} />
+                    <Arc rx={20} ry={20} ccw x={90} y={30} />
+                    <Quad cx={90} cy={60} x={50} y={90} />
+                    <Quad cx={10} cy={60} x={10} y={30} />
                     <Close />
                 </Path>
             </svg>
@@ -37,11 +35,11 @@ describe("SVG Path Component", () => {
         const { container } = render(
             <svg viewBox="0 0 100 100">
                 <Path d="z">
-                    <Move to={[10, 30]} />
-                    <Arc radii={[20, 20]} counterClockwise end={[50, 30]} />
-                    <Arc radii={[20, 20]} counterClockwise end={[90, 30]} />
-                    <Quad control={[90, 60]} end={[50, 90]} />
-                    <Quad control={[10, 60]} end={[10, 30]} />
+                    <Move x={10} y={30} />
+                    <Arc rx={20} ry={20} ccw x={50} y={30} />
+                    <Arc rx={20} ry={20} ccw x={90} y={30} />
+                    <Quad cx={90} cy={60} x={50} y={90} />
+                    <Quad cx={10} cy={60} x={10} y={30} />
                     <Close />
                 </Path>
             </svg>
@@ -64,73 +62,57 @@ describe("SVG Path Component", () => {
         });
 
         test("handle move commands", () => {
-            expect(extractPathDefFromJsx(<Move to={[1, 2]} />)).toBe("M1 2");
-            expect(extractPathDefFromJsx(<Move rel to={[1, 2]} />)).toBe(
+            expect(extractPathDefFromJsx(<Move x={1} y={2} />)).toBe("M1 2");
+            expect(extractPathDefFromJsx(<Move rel x={1} y={2} />)).toBe(
                 "m1 2"
             );
         });
 
         test("handle line commands", () => {
-            expect(extractPathDefFromJsx(<Line end={[1, 2]} />)).toBe("L1 2");
-            expect(extractPathDefFromJsx(<Line rel end={[1, 2]} />)).toBe(
+            expect(extractPathDefFromJsx(<Line x={1} y={2} />)).toBe("L1 2");
+            expect(extractPathDefFromJsx(<Line rel x={1} y={2} />)).toBe(
                 "l1 2"
             );
         });
 
         test("handle horizontal commands", () => {
-            expect(extractPathDefFromJsx(<Horizontal x={1} />)).toBe("H1");
-            expect(extractPathDefFromJsx(<Horizontal rel x={1} />)).toBe("h1");
+            expect(extractPathDefFromJsx(<Line x={1} />)).toBe("H1");
+            expect(extractPathDefFromJsx(<Line rel x={1} />)).toBe("h1");
         });
 
         test("handle vertical commands", () => {
-            expect(extractPathDefFromJsx(<Vertical y={1} />)).toBe("V1");
-            expect(extractPathDefFromJsx(<Vertical rel y={1} />)).toBe("v1");
+            expect(extractPathDefFromJsx(<Line y={1} />)).toBe("V1");
+            expect(extractPathDefFromJsx(<Line rel y={1} />)).toBe("v1");
         });
 
         test("handle cubic commands", () => {
             expect(
                 extractPathDefFromJsx(
-                    <Cubic
-                        abs
-                        controlStart={[1, 2]}
-                        controlEnd={[3, 4]}
-                        end={[5, 6]}
-                    />
+                    <Cubic abs csx={1} csy={2} cex={3} cey={4} x={5} y={6} />
                 )
             ).toBe("C1 2 3 4 5 6");
             expect(
                 extractPathDefFromJsx(
-                    <Cubic
-                        rel
-                        controlStart={[1, 2]}
-                        controlEnd={[3, 4]}
-                        end={[5, 6]}
-                    />
+                    <Cubic rel csx={1} csy={2} cex={3} cey={4} x={5} y={6} />
                 )
             ).toBe("c1 2 3 4 5 6");
             expect(
-                extractPathDefFromJsx(
-                    <Cubic controlEnd={[3, 4]} end={[5, 6]} />
-                )
+                extractPathDefFromJsx(<Cubic cex={3} cey={4} x={5} y={6} />)
             ).toBe("S3 4 5 6");
             expect(
-                extractPathDefFromJsx(
-                    <Cubic rel controlEnd={[3, 4]} end={[5, 6]} />
-                )
+                extractPathDefFromJsx(<Cubic rel cex={3} cey={4} x={5} y={6} />)
             ).toBe("s3 4 5 6");
         });
 
         test("handle quad commands", () => {
             expect(
-                extractPathDefFromJsx(<Quad control={[1, 2]} end={[3, 4]} />)
+                extractPathDefFromJsx(<Quad cx={1} cy={2} x={3} y={4} />)
             ).toBe("Q1 2 3 4");
             expect(
-                extractPathDefFromJsx(
-                    <Quad rel control={[1, 2]} end={[3, 4]} />
-                )
+                extractPathDefFromJsx(<Quad rel cx={1} cy={2} x={3} y={4} />)
             ).toBe("q1 2 3 4");
-            expect(extractPathDefFromJsx(<Quad end={[3, 4]} />)).toBe("T3 4");
-            expect(extractPathDefFromJsx(<Quad rel end={[3, 4]} />)).toBe(
+            expect(extractPathDefFromJsx(<Quad x={3} y={4} />)).toBe("T3 4");
+            expect(extractPathDefFromJsx(<Quad rel x={3} y={4} />)).toBe(
                 "t3 4"
             );
         });
@@ -138,68 +120,42 @@ describe("SVG Path Component", () => {
         test("handle arc commands", () => {
             expect(
                 extractPathDefFromJsx(
-                    <Arc
-                        abs
-                        end={[1, 2]}
-                        radii={[3, 4]}
-                        angle={5}
-                        largeArc
-                        counterClockwise
-                    />
+                    <Arc abs x={1} y={2} rx={3} ry={4} angle={5} largeArc ccw />
                 )
             ).toBe("A3 4 5 1 1 1 2");
             expect(
                 extractPathDefFromJsx(
-                    <Arc
-                        rel
-                        end={[1, 2]}
-                        radii={[3, 4]}
-                        angle={5}
-                        largeArc
-                        counterClockwise
-                    />
+                    <Arc rel x={1} y={2} rx={3} ry={4} angle={5} largeArc ccw />
                 )
             ).toBe("a3 4 5 1 1 1 2");
             expect(
                 extractPathDefFromJsx(
-                    <Arc end={[1, 2]} radii={[3, 4]} angle={5} largeArc />
+                    <Arc x={1} y={2} rx={3} ry={4} angle={5} largeArc />
                 )
             ).toBe("A3 4 5 1 0 1 2");
             expect(
                 extractPathDefFromJsx(
-                    <Arc rel end={[1, 2]} radii={[3, 4]} angle={5} largeArc />
+                    <Arc rel x={1} y={2} rx={3} ry={4} angle={5} largeArc />
                 )
             ).toBe("a3 4 5 1 0 1 2");
             expect(
                 extractPathDefFromJsx(
-                    <Arc
-                        abs
-                        end={[1, 2]}
-                        radii={[3, 4]}
-                        angle={5}
-                        counterClockwise
-                    />
+                    <Arc abs x={1} y={2} rx={3} ry={4} angle={5} ccw />
                 )
             ).toBe("A3 4 5 0 1 1 2");
             expect(
                 extractPathDefFromJsx(
-                    <Arc
-                        rel
-                        end={[1, 2]}
-                        radii={[3, 4]}
-                        angle={5}
-                        counterClockwise
-                    />
+                    <Arc rel x={1} y={2} rx={3} ry={4} angle={5} ccw />
                 )
             ).toBe("a3 4 5 0 1 1 2");
             expect(
                 extractPathDefFromJsx(
-                    <Arc end={[1, 2]} radii={[3, 4]} angle={5} />
+                    <Arc x={1} y={2} rx={3} ry={4} angle={5} />
                 )
             ).toBe("A3 4 5 0 0 1 2");
             expect(
                 extractPathDefFromJsx(
-                    <Arc rel end={[1, 2]} radii={[3, 4]} angle={5} />
+                    <Arc rel x={1} y={2} rx={3} ry={4} angle={5} />
                 )
             ).toBe("a3 4 5 0 0 1 2");
         });
