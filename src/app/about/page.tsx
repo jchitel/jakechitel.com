@@ -180,15 +180,8 @@ export default function About() {
             />
 
             <WorkHistoryItem
-                title="Software Development Engineer II"
-                timeRange="January 2016 - June 2016"
-                company="Amazon"
-                location="Seattle, Washington"
-            />
-
-            <WorkHistoryItem
-                title="Software Development Engineer I"
-                timeRange="June 2015 - January 2016"
+                title="Software Development Engineer"
+                timeRange="June 2015 - June 2016"
                 company="Amazon"
                 location="Seattle, Washington"
             />

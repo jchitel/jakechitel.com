@@ -1,8 +1,10 @@
-import "./globals.css";
 import { clsx } from "clsx";
 import type { Metadata } from "next";
 import { Source_Code_Pro } from "next/font/google";
+import { ContactLinks } from "./contact-links";
 import { Nav } from "./nav";
+
+import "./globals.css";
 
 const sourceCodePro = Source_Code_Pro({ subsets: ["latin"] });
 
@@ -27,8 +29,9 @@ export default function RootLayout({
                     "flex flex-col justify-between",
                 )}
             >
-                <header>
+                <header className="fixed w-full flex justify-between items-center">
                     <Nav />
+                    <ContactLinks />
                 </header>
                 <main className="flex-grow flex flex-col">{children}</main>
                 <footer className="text-center text-sm text-slate-500 dark:text-slate-400 pb-2">

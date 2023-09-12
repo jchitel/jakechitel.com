@@ -1,4 +1,5 @@
 import { clsx } from "clsx";
+import Link from "next/link";
 
 export default function Home() {
     return (
@@ -10,23 +11,13 @@ export default function Home() {
             <h1 className="text-7xl font-thin pb-4">Jake Chitel</h1>
 
             <p>
-                I&apos;m a software engineer from{" "}
-                <strong>Milwaukee, Wisconsin, USA</strong>. I am currently a{" "}
-                <strong>Staff Software Engineer</strong> at{" "}
-                <strong>
-                    <a
-                        className="underline"
-                        href="https://directsupply.com"
-                        target="_blank"
-                    >
-                        Direct Supply
-                    </a>
-                </strong>
-                , where I work in frontend (<strong>React</strong>/
-                <strong>TypeScript</strong>), backend (<strong>.NET</strong>/
-                <strong>Node</strong>), and iOS (<strong>Swift</strong>/
-                <strong>SwiftUI</strong>). Please reach out if you&apos;d like
-                to connect!
+                I&apos;m a <strong>Staff Software Engineer</strong> from{" "}
+                <strong>Milwaukee, Wisconsin, USA</strong>. I love building{" "}
+                <strong>frontends</strong> and the <strong>backends</strong>{" "}
+                that power them. I have an unhealthy obsession with{" "}
+                <strong>improving</strong> things. I deeply enjoy{" "}
+                <strong>learning</strong> and teaching. Please reach out if
+                you&apos;d like to connect!
             </p>
         </div>
     );
