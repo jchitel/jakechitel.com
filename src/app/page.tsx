@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import Link from "next/link";
+import Bio from "./bio.mdx";
 
 export default function Home() {
     return (
@@ -8,17 +8,8 @@ export default function Home() {
                 "max-w-prose mx-auto flex-grow flex flex-col justify-center",
             )}
         >
-            <h1 className="text-7xl font-thin pb-4">Jake Chitel</h1>
-
-            <p>
-                I&apos;m a <strong>Staff Software Engineer</strong> from{" "}
-                <strong>Milwaukee, Wisconsin, USA</strong>. I love building{" "}
-                <strong>frontends</strong> and the <strong>backends</strong>{" "}
-                that power them. I have an unhealthy obsession with{" "}
-                <strong>improving</strong> things. I deeply enjoy{" "}
-                <strong>learning</strong> and teaching. Please reach out if
-                you&apos;d like to connect!
-            </p>
+            <h1 className="text-4xl md:text-7xl font-thin pb-4">Jake Chitel</h1>
+            <Bio />
         </div>
     );
 }

@@ -1,8 +1,7 @@
 import { clsx } from "clsx";
 import type { Metadata } from "next";
 import { Source_Code_Pro } from "next/font/google";
-import { ContactLinks } from "./contact-links";
-import { Nav } from "./nav";
+import { NavHeader } from "@/nav/header";
 
 import "./globals.css";
 
@@ -24,17 +23,29 @@ export default function RootLayout({
                 className={clsx(
                     sourceCodePro.className,
                     "min-h-screen",
-                    "text-slate-900 bg-indigo-100",
+                    "text-slate-900 bg-indigo-200",
                     "dark:text-slate-50 dark:bg-indigo-950",
                     "flex flex-col justify-between",
                 )}
             >
-                <header className="fixed w-full flex justify-between items-center">
-                    <Nav />
-                    <ContactLinks />
-                </header>
-                <main className="flex-grow flex flex-col">{children}</main>
-                <footer className="text-center text-sm text-slate-500 dark:text-slate-400 pb-2">
+                <NavHeader />
+                <main
+                    className={clsx(
+                        "flex-grow flex flex-col",
+                        "mt-20",
+                        "mx-8 md:mx-[unset]",
+                    )}
+                >
+                    {children}
+                </main>
+                <footer
+                    className={clsx(
+                        "pb-2 pt-6",
+                        "bg-gradient-to-t from-indigo-300 to-indigo-300/0",
+                        "dark:from-indigo-900 dark:to-indigo-900/0",
+                        "text-center text-sm text-slate-600 dark:text-slate-400",
+                    )}
+                >
                     Jake Chitel &copy; 2011 - {new Date().getFullYear()}
                 </footer>
             </body>
