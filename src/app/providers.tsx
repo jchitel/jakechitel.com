@@ -1,0 +1,48 @@
+'use client';
+
+import { createContext, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { ThemeProvider, useTheme } from "next-themes";
+import { usePrevious } from "@/lib/usePrevious";
+
+function ThemeWatcher() {
+    const { resolvedTheme, setTheme } = useTheme();
+
+    useEffect(() => {
+        const media = window.matchMedia('(prefers-color-scheme: dark)');
+
+        function onMediaChange() {
+            const systemTheme = media.matches ? 'dark' : 'light';
+            if (resolvedTheme === systemTheme) {
+                setTheme('system');
+            }
+        }
+
+        onMediaChange();
+        media.addEventListener('change', onMediaChange);
+
+        return () => {
+            media.removeEventListener('change', onMediaChange);
+        };
+    }, [resolvedTheme, setTheme]);
+
+    return undefined;
+}
+
+export const AppContext = createContext<{ previousPathname: string | undefined }>({
+    previousPathname: undefined
+});
+
+export function Providers({ children }: { children: React.ReactNode }) {
+    const pathname = usePathname();
+    const previousPathname = usePrevious(pathname);
+
+    return (
+        <AppContext.Provider value={{ previousPathname }}>
+            <ThemeProvider attribute="class" disableTransitionOnChange>
+                <ThemeWatcher />
+                {children}
+            </ThemeProvider>
+        </AppContext.Provider>
+    );
+}

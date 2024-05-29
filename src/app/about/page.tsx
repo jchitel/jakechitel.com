@@ -1,114 +1,92 @@
+import { type Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import clsx from "clsx";
+
+import { Container } from "@/components/Container";
+import { GitHubIcon, LinkedInIcon } from "@/components/SocialIcons";
+import portraitImage from "@/images/portrait.jpg";
 import AboutMe from "./about-me.mdx";
+import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa";
 
-export default function About() {
+function SocialLink({
+    className,
+    href,
+    children,
+    icon: Icon,
+}: {
+    className?: string;
+    href: string;
+    icon: React.ComponentType<{ className?: string }>;
+    children: React.ReactNode;
+}) {
     return (
-        <div className="max-w-prose mx-auto pt-20 pb-10">
-            <h1 className="text-5xl">About Me!</h1>
-            <p className="pb-6 text-slate-500 dark:text-slate-400">
-                Last updated: 2023-09-07
-            </p>
-
-            <AboutMe />
-
-            <h2 className="text-3xl pt-4">Work History</h2>
-            <p className="pb-6 text-slate-500 dark:text-slate-400">
-                (Most Recent First)
-            </p>
-
-            {workHistory.map((item) => (
-                <WorkHistoryItem key={item.timeRange} {...item} />
-            ))}
-        </div>
+        <li className={clsx(className, "flex")}>
+            <Link
+                href={href}
+                className="group flex text-sm font-medium text-zinc-800 transition hover:text-teal-500 dark:text-zinc-200 dark:hover:text-teal-500"
+            >
+                <Icon className="h-6 w-6 flex-none fill-zinc-500 transition group-hover:fill-teal-500" />
+                <span className="ml-4">{children}</span>
+            </Link>
+        </li>
     );
 }
 
-const workHistory = [
-    {
-        title: "Staff Software Engineer",
-        timeRange: "June 2022 - Present",
-        company: "Direct Supply",
-        location: "Milwaukee, Wisconsin",
-    },
-    {
-        title: "Software Engineer IV",
-        timeRange: "June 2021 - June 2022",
-        company: "Arch Capital Group",
-        location: "Remote",
-    },
-    {
-        title: "Senior Software Engineer",
-        timeRange: "April 2019 - June 2021",
-        company: "Direct Supply",
-        location: "Milwaukee, Wisconsin",
-    },
-    {
-        title: "Software Engineer",
-        timeRange: "September 2017 - April 2019",
-        company: "Direct Supply",
-        location: "Milwaukee, Wisconsin",
-    },
-    {
-        title: "Software Engineer",
-        timeRange: "April 2017 - September 2017",
-        company: "GE Healthcare",
-        location: "Waukesha, Wisconsin",
-    },
-    {
-        title: "Software Engineer",
-        timeRange: "July 2016 - April 2017",
-        company: "D+H Mortgagebot (Now Finastra)",
-        location: "Mequon, Wisconsin",
-    },
-    {
-        title: "Software Development Engineer",
-        timeRange: "June 2015 - June 2016",
-        company: "Amazon",
-        location: "Seattle, Washington",
-    },
-    {
-        title: "Software Developer",
-        timeRange: "August 2011 - May 2015",
-        company: "GasDay Lab (Now Marquette Energy Analytics)",
-        location: "Milwaukee, Wisconsin",
-    },
-    {
-        title: "Software Development Engineer Intern",
-        timeRange: "May 2014 - August 2014",
-        company: "Amazon",
-        location: "Seattle, Washington",
-    },
-    {
-        title: "Software Developer Intern",
-        timeRange: "May 2013 - October 2013",
-        company: "Quad/Graphics",
-        location: "Sussex, Wisconsin",
-    },
-];
-
-type WorkHistoryItemProps = {
-    title: string;
-    timeRange: string;
-    company: string;
-    location: string;
+export const metadata: Metadata = {
+    title: "About",
+    description:
+        "I'm Jake Chitel. I live in Milwaukee, and I build cool stuff.",
 };
 
-function WorkHistoryItem({
-    title,
-    timeRange,
-    company,
-    location,
-}: WorkHistoryItemProps) {
+export default function About() {
     return (
-        <p className="pb-4">
-            <strong>{title}</strong>{" "}
-            <span className="text-slate-500 dark:text-slate-400">
-                {timeRange}
-            </span>
-            <br />
-            <strong>{company}</strong>{" "}
-            <span className="text-slate-500 dark:text-slate-400">
-                {location}
-            </span>
-        </p>
+        <Container className="mt-16 sm:mt-32">
+            <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-y-12">
+                <div className="lg:pl-20">
+                    <div className="max-w-xs px-2.5 lg:max-w-none">
+                        <Image
+                            src={portraitImage}
+                            alt=""
+                            sizes="(min-width: 1024px) 32rem, 20rem"
+                            className="aspect-square rotate-3 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800"
+                        />
+                    </div>
+                </div>
+                <div className="lg:order-first lg:row-span-2">
+                    <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
+                        {metadata.description}
+                    </h1>
+                    <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
+                        <AboutMe />
+                    </div>
+                </div>
+                <div className="lg:pl-20">
+                    <ul role="list">
+                        <SocialLink
+                            href="https://github.com/jchitel"
+                            icon={FaGithub}
+                            className="mt-4"
+                        >
+                            Follow on GitHub
+                        </SocialLink>
+                        <SocialLink
+                            href="https://www.linkedin.com/in/jake-chitel-4a395858/"
+                            icon={FaLinkedin}
+                            className="mt-4"
+                        >
+                            Follow on LinkedIn
+                        </SocialLink>
+                        <SocialLink
+                            href="mailto:jchitel@gmail.com"
+                            icon={FaEnvelope}
+                            className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40"
+                        >
+                            jchitel@gmail.com
+                        </SocialLink>
+                    </ul>
+                </div>
+            </div>
+        </Container>
     );
 }
