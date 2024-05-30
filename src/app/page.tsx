@@ -36,11 +36,11 @@ function BriefcaseIcon(props: React.ComponentPropsWithoutRef<"svg">) {
         >
             <path
                 d="M2.75 9.75a3 3 0 0 1 3-3h12.5a3 3 0 0 1 3 3v8.5a3 3 0 0 1-3 3H5.75a3 3 0 0 1-3-3v-8.5Z"
-                className="fill-zinc-100 stroke-zinc-400 dark:fill-zinc-100/10 dark:stroke-zinc-500"
+                className="fill-indigo-100 stroke-indigo-400 dark:fill-indigo-100/10 dark:stroke-indigo-500"
             />
             <path
                 d="M3 14.25h6.249c.484 0 .952-.002 1.316.319l.777.682a.996.996 0 0 0 1.316 0l.777-.682c.364-.32.832-.319 1.316-.319H21M8.75 6.5V4.75a2 2 0 0 1 2-2h2.5a2 2 0 0 1 2 2V6.5"
-                className="stroke-zinc-400 dark:stroke-zinc-500"
+                className="stroke-indigo-400 dark:stroke-indigo-500"
             />
         </svg>
     );
@@ -80,7 +80,7 @@ function SocialLink({
 }) {
     return (
         <Link className="group -m-1 p-1" {...props}>
-            <Icon className="h-6 w-6 fill-zinc-500 transition group-hover:fill-zinc-600 dark:fill-zinc-400 dark:group-hover:fill-zinc-300" />
+            <Icon className="h-6 w-6 fill-indigo-600 transition group-hover:fill-indigo-700 dark:fill-indigo-400 dark:group-hover:fill-indigo-300" />
         </Link>
     );
 }
@@ -104,7 +104,7 @@ function Role({ role }: { role: Role }) {
 
     return (
         <li className="flex gap-4">
-            <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-white dark:ring-0">
+            <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-indigo-800/5 ring-1 ring-indigo-900/5 dark:border dark:border-indigo-700/50 dark:bg-white dark:ring-0">
                 <Image src={role.logo} alt="" className="h-7 w-7" unoptimized />
             </div>
             <dl className="flex flex-auto flex-wrap gap-x-2">
@@ -113,12 +113,12 @@ function Role({ role }: { role: Role }) {
                     {role.company}
                 </dd>
                 <dt className="sr-only">Role</dt>
-                <dd className="text-xs text-zinc-500 dark:text-zinc-400">
+                <dd className="text-xs text-zinc-500 dark:text-zinc-300">
                     {role.title}
                 </dd>
                 <dt className="sr-only">Date</dt>
                 <dd
-                    className="ml-auto text-xs text-zinc-400 dark:text-zinc-500"
+                    className="ml-auto text-xs text-zinc-400 dark:text-zinc-400"
                     aria-label={`${startLabel} until ${endLabel}`}
                 >
                     <time dateTime={startDate}>{startLabel}</time>{" "}
@@ -208,7 +208,7 @@ const resume: Array<Role> = [
 
 function Resume() {
     return (
-        <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
+        <div className="rounded-2xl border border-indigo-200 p-6 dark:border-indigo-700/40">
             <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
                 <BriefcaseIcon className="h-6 w-6 flex-none" />
                 <span className="ml-3">Work</span>
@@ -224,7 +224,7 @@ function Resume() {
                 className="group mt-6 w-full"
             >
                 Download Resume
-                <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
+                <ArrowDownIcon className="h-4 w-4 stroke-indigo-400 transition group-active:stroke-indigo-600 dark:group-hover:stroke-indigo-50 dark:group-active:stroke-indigo-50" />
             </Button>
         </div>
     );
@@ -247,7 +247,7 @@ function Photos() {
                         <div
                             key={image.src}
                             className={clsx(
-                                "relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 sm:w-72 sm:rounded-2xl dark:bg-zinc-800",
+                                "relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-indigo-100 sm:w-72 sm:rounded-2xl dark:bg-indigo-800",
                                 rotations[imageIndex % rotations.length],
                             )}
                         >
@@ -273,9 +273,9 @@ export default async function Home() {
             <Container className="mt-9">
                 <div className="max-w-2xl">
                     <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-                        Full-stack developer, father, and known key presser.
+                        Full-stack developer, father, and known button clicker.
                     </h1>
-                    <div className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
+                    <div className="mt-6 text-base text-zinc-600 dark:text-zinc-300">
                         <Bio />
                     </div>
                     <div className="mt-6 flex gap-6">
@@ -305,7 +305,7 @@ export default async function Home() {
                             <BlogPost key={post.slug} post={post} />
                         ))}
                         {!posts.length && (
-                            <p className="text-zinc-500 dark:text-zinc-400">
+                            <p className="text-zinc-500 dark:text-zinc-300">
                                 No blog posts yet. Check again soon!
                             </p>
                         )}

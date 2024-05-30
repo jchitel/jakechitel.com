@@ -47,13 +47,13 @@ export default async function BlogIndex() {
             title={metadata.description!}
             intro="A glimpse into one of our world's most truly disturbed minds."
         >
-            <div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
+            <div className="md:border-l md:border-indigo-100 md:pl-6 md:dark:border-indigo-600/40">
                 <div className="flex max-w-3xl flex-col space-y-16">
                     {posts.map((post) => (
                         <BlogPost key={post.slug} post={post} />
                     ))}
                     {!posts.length && (
-                        <p className="text-zinc-500 dark:text-zinc-400">
+                        <p className="text-zinc-500 dark:text-zinc-300">
                             No posts yet. Check again soon!
                         </p>
                     )}

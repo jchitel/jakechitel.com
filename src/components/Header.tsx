@@ -100,9 +100,9 @@ function MobileNavigation(
 ) {
     return (
         <Popover {...props}>
-            <PopoverButton className="group flex items-center rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10 dark:hover:ring-white/20">
+            <PopoverButton className="group flex items-center rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-zinc-800 shadow-lg shadow-indigo-800/5 ring-1 ring-indigo-900/5 backdrop-blur dark:bg-indigo-700/90 dark:text-zinc-100 dark:ring-white/10 dark:hover:ring-white/20">
                 Menu
-                <ChevronDownIcon className="ml-3 h-auto w-2 stroke-zinc-500 group-hover:stroke-zinc-700 dark:group-hover:stroke-zinc-400" />
+                <ChevronDownIcon className="ml-3 h-auto w-2 stroke-indigo-500 group-hover:stroke-indigo-700 dark:group-hover:stroke-indigo-400" />
             </PopoverButton>
             <Transition>
                 <TransitionChild
@@ -113,7 +113,7 @@ function MobileNavigation(
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <PopoverOverlay className="fixed inset-0 z-50 bg-zinc-800/40 backdrop-blur-sm dark:bg-black/80" />
+                    <PopoverOverlay className="fixed inset-0 z-50 bg-indigo-800/40 backdrop-blur-sm dark:bg-black/80" />
                 </TransitionChild>
                 <TransitionChild
                     enter="duration-150 ease-out"
@@ -125,21 +125,21 @@ function MobileNavigation(
                 >
                     <PopoverPanel
                         focus
-                        className="fixed inset-x-4 top-8 z-50 origin-top rounded-3xl bg-white p-8 ring-1 ring-zinc-900/5 dark:bg-zinc-900 dark:ring-zinc-800"
+                        className="fixed inset-x-4 top-8 z-50 origin-top rounded-3xl bg-white p-8 ring-1 ring-indigo-900/5 dark:bg-indigo-800 dark:ring-indigo-800"
                     >
                         <div className="flex flex-row-reverse items-center justify-between">
                             <PopoverButton
                                 aria-label="Close menu"
                                 className="-m-1 p-1"
                             >
-                                <CloseIcon className="h-6 w-6 text-zinc-500 dark:text-zinc-400" />
+                                <CloseIcon className="h-6 w-6 text-zinc-500 dark:text-zinc-300" />
                             </PopoverButton>
-                            <h2 className="text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                            <h2 className="text-sm font-medium text-zinc-600 dark:text-zinc-300">
                                 Navigation
                             </h2>
                         </div>
                         <nav className="mt-6">
-                            <ul className="-my-2 divide-y divide-zinc-100 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300">
+                            <ul className="-my-2 divide-y divide-indigo-100 text-base text-zinc-800 dark:divide-indigo-100/5 dark:text-zinc-200">
                                 <MobileNavItem href="/about">
                                     About
                                 </MobileNavItem>
@@ -186,7 +186,7 @@ function NavItem({
 function DesktopNavigation(props: React.ComponentPropsWithoutRef<"nav">) {
     return (
         <nav {...props}>
-            <ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
+            <ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-indigo-800/5 ring-1 ring-indigo-900/5 backdrop-blur dark:bg-indigo-700/90 dark:text-zinc-100 dark:ring-white/10">
                 <NavItem href="/about">About</NavItem>
                 <NavItem href="/blog">Blog</NavItem>
                 <NavItem href="/uses">Uses</NavItem>
@@ -210,11 +210,11 @@ function ThemeToggle() {
             aria-label={
                 mounted ? `Switch to ${otherTheme} theme` : "Toggle theme"
             }
-            className="group rounded-full bg-white/90 px-3 py-2 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur transition dark:bg-zinc-800/90 dark:ring-white/10 dark:hover:ring-white/20"
+            className="group rounded-full bg-white/90 px-3 py-2 shadow-lg shadow-indigo-800/5 ring-1 ring-indigo-900/5 backdrop-blur transition dark:bg-indigo-700/90 dark:ring-white/10 dark:hover:ring-white/20"
             onClick={() => setTheme(otherTheme)}
         >
-            <SunIcon className="h-6 w-6 fill-zinc-100 stroke-zinc-500 transition group-hover:fill-zinc-200 group-hover:stroke-zinc-700 dark:hidden [@media(prefers-color-scheme:dark)]:fill-teal-50 [@media(prefers-color-scheme:dark)]:stroke-teal-500 [@media(prefers-color-scheme:dark)]:group-hover:fill-teal-50 [@media(prefers-color-scheme:dark)]:group-hover:stroke-teal-600" />
-            <MoonIcon className="hidden h-6 w-6 fill-zinc-700 stroke-zinc-500 transition dark:block [@media(prefers-color-scheme:dark)]:group-hover:stroke-zinc-400 [@media_not_(prefers-color-scheme:dark)]:fill-teal-400/10 [@media_not_(prefers-color-scheme:dark)]:stroke-teal-500" />
+            <SunIcon className="h-6 w-6 fill-indigo-100 stroke-indigo-500 transition group-hover:fill-indigo-200 group-hover:stroke-indigo-700 dark:hidden [@media(prefers-color-scheme:dark)]:fill-teal-50 [@media(prefers-color-scheme:dark)]:stroke-teal-500 [@media(prefers-color-scheme:dark)]:group-hover:fill-teal-50 [@media(prefers-color-scheme:dark)]:group-hover:stroke-teal-600" />
+            <MoonIcon className="hidden h-6 w-6 fill-indigo-600 stroke-indigo-400 transition dark:block [@media(prefers-color-scheme:dark)]:group-hover:stroke-indigo-300 [@media_not_(prefers-color-scheme:dark)]:fill-teal-400/10 [@media_not_(prefers-color-scheme:dark)]:stroke-teal-500" />
         </button>
     );
 }
@@ -233,7 +233,7 @@ function AvatarContainer({
         <div
             className={clsx(
                 className,
-                "h-10 w-10 rounded-full bg-white/90 p-0.5 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:ring-white/10",
+                "h-10 w-10 rounded-full bg-white/90 p-0.5 shadow-lg shadow-indigo-800/5 ring-1 ring-indigo-900/5 backdrop-blur dark:bg-indigo-700/90 dark:ring-white/10",
             )}
             {...props}
         />
@@ -259,7 +259,7 @@ function Avatar({
                 alt=""
                 sizes={large ? "4rem" : "2.25rem"}
                 className={clsx(
-                    "rounded-full bg-zinc-100 object-cover dark:bg-zinc-800",
+                    "rounded-full bg-indigo-100 object-cover dark:bg-indigo-700",
                     large ? "h-16 w-16" : "h-9 w-9",
                 )}
                 priority

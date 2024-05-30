@@ -25,7 +25,7 @@ export default function RootLayout({
             className={clsx(sourceCodePro.className, "h-full antialiased")}
             suppressHydrationWarning
         >
-            <body className="flex h-full bg-zinc-50 dark:bg-black">
+            <body className="flex h-full bg-indigo-50 dark:bg-black">
                 <Providers>
                     <div className="flex w-full">
                         <Layout>{children}</Layout>

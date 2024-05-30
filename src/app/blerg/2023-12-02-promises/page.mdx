@@ -1,0 +1,228 @@
+import { BlogPostLayout } from "@/components/BlogPostLayout";
+
+export const post = {
+    author: "Jake Chitel",
+    date: "2023-12-02",
+    title: "How Do Promises Work?",
+    description:
+        "In my first blog post I've decided to try implementing the Promise API from scratch without referencing any other implementation.",
+};
+
+export const metadata = {
+    title: post.title,
+    description: post.description,
+};
+
+export default (props) => <BlogPostLayout post={post} {...props} />;
+
+Hello, and welcome to the first post of my blog! This post is coming about 12 years too late, but the second best time to start a blog is right now, so here we go!
+
+A few years ago, for no reason in particular, I decided that my first toe-dip into blogging would do a deep dive on JS promises.
+It's a nicely sized subject with a rich history and relatively minimal controversy,
+and I've been using promises in one form or another since 2012 with jQuery's Deferred API, so it's fair to say that I have some experience in this area.
+I hope this post is informative and enjoyable to read!
+
+NOTE: This assumes that you are familiar with async programming in JS.
+I could give a deeper overview of that, but many before me have done this, and I want to focus on the meat of the content.
+
+## What is a Promise?
+
+Let's start with what a promise actually is, from a theoretical perspective.
+
+In a typical programming language where synchronous execution is the default (such as JS),
+an asynchronous operation is performed by kicking off some long-running task (e.g. disk or network access)
+and registering a "hook" to resume execution when the task is complete.
+This "hook" is conventionally known as a _callback_, which in JS is represented by a function reference.
+
+```js
+// 1. Kick off long-running task
+longRunningTask.kickOff(params, (result) => {
+    // 3. Resume execution...
+});
+// 2. Yield control back to the runtime
+```
+
+While quite flexible, this general pattern doesn't scale well, and it can be difficult to follow the flow of execution
+for all but the simplest code. The problems that arise when trying to implement complex logic have earned
+the affectionate name "callback hell".
+
+Promises provide an API that makes asynchronous code look more like synchronous code,
+because it decouples the "kick off a long-running task" step from the eventual callback.
+Instead of passing a callback immediately when kicking off the task,
+the operation returns a "promise" value which wraps the eventual result.
+This value can then be passed around as if it was the result,
+and whenever the actual result needs to be consumed, a callback can then be registered on the promise.
+
+```js
+// 1. Kick off long-running task and get promise
+const promise = longRunningTask.kickOffAndGetPromise(params);
+
+// Pass promise around...
+
+promise.then((result) => {
+    // 3. Resume execution...
+});
+// 2. Yield control back to the runtime
+```
+
+The funny thing about promises that no one ever seems to mention is that they don't actually replace callbacks.
+In the snippet above, we still need to pass a callback to `promise.then()`.
+And even though the long-running task returns a promise, if we break open `kickOffAndGetPromise` this is likely what we'll see:
+
+```js
+class LongRunningTask {
+    kickOffAndGetPromise(params) {
+        return new Promise((resolve) => {
+            this.kickOff(params, resolve);
+        });
+    }
+}
+```
+
+The actual low-level API that kicks off the operation still needs a callback, it's just hidden inside the promise now.
+Promises don't change the fact that JS is still based on a synchronous execution model.
+They are just a clever API that provides a clean layer of abstraction for async programming.
+(`async/await` muddies the waters a bit, but that syntax is still just sugar for callbacks under the hood.)
+And that clever API doesn't have any magic granted by the spec. It can be implemented using regular old JS code.
+
+Why don't we give that a go?
+
+## The Promise API
+
+We know the general promise API (adapted from the TypeScript lib types, ignoring static helpers for now):
+
+```ts
+class Promise<T> {
+    constructor(executor: ExecutorFn<T>);
+
+    then<TResult1 = T, TResult2 = never>(
+        onfulfilled?: ThenFn<T, TResult1> | undefined,
+        onrejected?: CatchFn<TResult2> | undefined,
+    ): Promise<TResult1 | TResult2>;
+
+    catch<TResult = never>(
+        onrejected?: CatchFn<TResult> | undefined,
+    ): Promise<T | TResult>;
+
+    finally(onfinally?: FinallyFn | undefined): Promise<T>;
+}
+
+interface PromiseLike<T> {
+    then<TResult1 = T, TResult2 = never>(
+        onfulfilled?: ThenFn<T, TResult1> | undefined,
+        onrejected?: CatchFn<TResult2> | undefined,
+    ): Promise<TResult1 | TResult2>;
+}
+
+type ResolveFn<T> = (value: T | PromiseLike<T>) => void;
+type RejectFn = (reason?: any) => void;
+type ExecutorFn<T> = (resolve: ResolveFn<T>, reject: RejectFn) => void;
+
+type ThenFn<T, TResult> = (value: T) => TResult | PromiseLike<TResult>;
+type CatchFn<TResult> = (reason: any) => TResult | PromiseLike<TResult>;
+type FinallyFn = () => void;
+```
+
+Constructing a promise requires an "executor" function which contains the logic
+to kick off the async operation and wire it up to the promise.
+This executor function can be thought of as an encapsulated scope, within which
+we still live in the "old world" of raw callbacks.
+The promise internals provide two callbacks to be used in this scope: `resolve`, to be used when the operation
+succeeds and its result is available; and `reject`, to be used if the operation fails
+with an error.
+
+The remaining API is the nice, clean, external-facing side of Promises,
+where we can pretend that the "old world" doesn't exist anymore.
+This consists of 3 methods:
+
+-   `then()` registers a function to handle the successful result of the operation.
+    The important feature of `then()` is that it chains. It always returns a new promise
+    that contains the result of the provided function. If the provided function returns
+    another promise, the resulting promise will be linked to that promise, allowing
+    multiple dependent async operations to be called one after the other.
+    If the upstream operation rejects, `then()` will ignore the provided function
+    and forward the error down the chain.
+-   `catch()` works the same as `then()`, but it handles the rejected case instead of
+    the successful case. If the function provided to `catch()` succeeds or returns a
+    successful promise, the resulting promise will succeed, allowing a promise chain
+    to convert a rejection back to a success, thus "handling" the rejection.
+    If the upstream operation succeeds, `catch()` will ignore the provided function
+    and forward the success down the chain.
+-   `finally()` allows a simple function to be called at the specified point in the chain
+    regardless of success or failure, and always forwards the success or failure down the chain.
+    This works similarly to the `finally` clause of a `try-catch` block, hence the name.
+
+An important addendum to the Promise API is the `PromiseLike` interface.
+Being a dynamically typed language, JS supports "duck typing" (i.e. if it quacks like a duck, it must be a duck).
+This means that values can be used as promises as long as they have the base API of promises.
+As long as a value has a `then()` method that returns another `PromiseLike` value,
+the spec requires runtimes to honor it as a promise, and most community libraries have followed suit.
+This means that checking if a value is a promise is more complicated that checking if it is an instance of the `Promise` class.
+Generally, if a value is an object with a `then` property with `typeof` `function`, it should be considered a promise.
+
+Given all of this background, let's get started on a hand-written implementation of this API.
+
+## The Implementation
+
+In an astonishing demonstration of forward thinking, in preparation for this blog post,
+I have never allowed myself to look at an implementation of the Promise API.
+As it turns out, this didn't prove too difficult.
+
+I'll go ahead an walk through a basic implementation that I wrote myself,
+and then we can comare it to some "blessed" implementations out in the wild,
+such as core-js, jQuery, or Bluebird.
+
+I've posted the initial implementation on GitHub [here](https://github.com/jchitel/promise-impl/blob/main/index.ts) if you'd prefer to see the final result.
+
+### Internal State
+
+The base of the API is the `Promise` class:
+
+```ts
+export class Promise<T> {
+    // ...
+}
+```
+
+As it turns out, the API requires a small amount of internal state.
+This is due to the fact that the methods of a promise may be called
+before or after a result is actually available. So we need:
+
+1. a place to store callbacks before the result is available
+2. a place to store the result for callbacks that get provided after the result is available
+
+For `#1`, we just track two arrays:
+
+```ts
+export class Promise<T> {
+    #onfulfilled: Array<ThenFn<T, unknown>> = [];
+    #onrejected: Array<CatchFn<unknown>> = [];
+}
+```
+
+`#onfulfilled` is used to store callbacks passed to `.then()`,
+and `#onrejected` is used to store callbacks passed to `.catch()`,
+or to the second argument of `.then()`. `unknown` is needed
+because the return values of these callbacks can be anything,
+and that only matters for downstream promises, not the current promise.
+
+`#2` requires more thought. A promise doesn't just have a single result,
+it can actually end up in two states: a "fulfilled" state when the operation succeeds,
+or a "rejected" state when the operation fails. This actually is the perfect case for a state machine:
+
+```
+                       |-----------|
+         |-----------> | Fulfilled |
+         |             |-----------|
+    |---------|
+    | Pending |
+    |---------|
+         |             |----------|
+         |-----------> | Rejected |
+                       |----------|
+
+```
+
+The "pending" state is the initial state, while we're waiting for the operation to finish.
+If the operation calls `resolve` in the executor, the state shifts to "fulfilled".
+If the operation calls `reject` in the executor, the state shifts to "rejected".
