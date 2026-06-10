@@ -290,7 +290,7 @@ export default async function Home() {
                             icon={FaGithub}
                         />
                         <SocialLink
-                            href="https://www.linkedin.com/in/jake-chitel-4a395858/"
+                            href="https://www.linkedin.com/in/jake-chitel/"
                             aria-label="Follow on LinkedIn"
                             icon={FaLinkedin}
                         />
