@@ -14,6 +14,7 @@ import logoAws from "@/images/logos/aws.jpeg";
 import logoGasDay from "@/images/logos/gasday.jpeg";
 import logoAmazon from "@/images/logos/amazon.jpeg";
 import logoQuad from "@/images/logos/quad.webp";
+import logoNm from "@/images/logos/nm.jpeg";
 import image1 from "@/images/photos/image-1.jpg";
 import image2 from "@/images/photos/image-2.jpg";
 import image3 from "@/images/photos/image-3.jpg";
@@ -132,14 +133,18 @@ function Role({ role }: { role: Role }) {
 
 const resume: Array<Role> = [
     {
+        company: "Northwestern Mutual",
+        title: "Software Engineer III",
+        logo: logoNm,
+        start: "Apr 2025",
+        end: "Apr 2026",
+    },
+    {
         company: "Direct Supply",
         title: "Staff Software Engineer",
         logo: logoDs,
         start: "Jun 2022",
-        end: {
-            label: "Present",
-            dateTime: new Date().getFullYear().toString(),
-        },
+        end: "Feb 2025",
     },
     {
         company: "Arch Capital Group",
@@ -285,7 +290,7 @@ export default async function Home() {
                             icon={FaGithub}
                         />
                         <SocialLink
-                            href="https://www.linkedin.com/in/jake-chitel-4a395858/"
+                            href="https://www.linkedin.com/in/jake-chitel/"
                             aria-label="Follow on LinkedIn"
                             icon={FaLinkedin}
                         />
